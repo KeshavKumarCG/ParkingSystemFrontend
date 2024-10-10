@@ -5,10 +5,8 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor() {
-    console.log('Login component created');
-  }
+
 }
