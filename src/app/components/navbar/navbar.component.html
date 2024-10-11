@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Navbar with Profile</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Optional: Font Awesome for profile icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,38 +11,38 @@
   </button>
 
   <!-- Navbar Links -->
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link" routerLink="/">Home</a>
+      </li>
+      <li class="nav-item"> 
+        <a class="nav-link" routerLink="/login">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/user/home">Car Status</a>
+        <a class="nav-link" routerLink="/user/home">Car Status</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Services
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/valet/info" (click)="$event.stopPropagation()">Contact Valet</a>
+          <a class="dropdown-item" routerLink="/valet/info">Contact Valet</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/user" (click)="$event.stopPropagation()">Where is my car?</a>
+          <a class="dropdown-item" routerLink="/user">Where is my car?</a>
         </div>
       </li>
     </ul>
-
-    <!-- Profile and User Info on the right side -->
+  
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="d-none d-lg-inline-block">Welcome, Harshdeep</span> <!-- Username/Welcome -->
+          <span class="d-none d-lg-inline-block">Welcome, Harshdeep</span>
         </a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-          <a class="dropdown-item" href="/profile">Profile</a>
-          <a class="dropdown-item" href="/logout">Logout</a>
+          <a class="dropdown-item" routerLink="/profile">Profile</a>
+          <a class="dropdown-item" routerLink="/logout">Logout</a>
         </div>
       </li>
     </ul>
@@ -65,4 +54,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </body>
-</html>

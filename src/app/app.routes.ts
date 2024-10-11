@@ -8,7 +8,6 @@ export const routes: Routes = [
     { path: '', component: WelcomePageComponent },  // Default route
     { path: 'login', component: LoginComponent },
     { path: 'user/home', component: UserHomePageComponent },
-    { path: 'valet/home', component: LoginComponent },
     { path: 'valet/info', component: ValetinfopageComponent },
     { path: '**', redirectTo: '' }  // Redirect unknown routes to WelcomePageComponent
 ];
