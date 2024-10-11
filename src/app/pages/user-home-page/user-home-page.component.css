@@ -1,0 +1,30 @@
+/* Custom Styles */
+.container {
+  max-width: 600px;
+
+}
+.card{
+  /* border: 1px solid rgb(39, 39, 39);   */
+
+  border-radius: 5px;
+}
+
+.card-header {
+  background-color: #343a40;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.status-indicator {
+  font-weight: bold;
+}
+
+.status-green {
+  color: #28a745;
+}
+
+.status-red {
+  color: #dc3545;
+}
