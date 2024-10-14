@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test", 
+    "test": "ng test",
     "serve:ssr:Frontend": "node dist/frontend/server/server.mjs"
   },
   "private": true,
@@ -21,6 +21,8 @@
     "@angular/platform-server": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.7",
+    "@ng-bootstrap/ng-bootstrap": "^17.0.1",
+    "bootstrap": "^5.3.3",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
