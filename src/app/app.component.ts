@@ -10,11 +10,7 @@ import { ValetinfopageComponent } from './pages/valetinfopage/valetinfopage.comp
 @Component({
   selector: 'app-root',
   standalone: true,
-<<<<<<< HEAD
   imports: [RouterOutlet, RouterLink , NavbarComponent, UserHomePageComponent,LoginComponent, RouterModule, ValetinfopageComponent],
-=======
-  imports: [RouterOutlet, RouterLink , NavbarComponent, LoginComponent, RouterModule, UserHomePageComponent, ValetinfopageComponent],
->>>>>>> 8dbaf09f7899632f871f672f12209ed71ab399b5
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] 
 })
