@@ -28,8 +28,8 @@ columns: any;
   ngOnInit() {
     // Initialize your cars array here or fetch from a service
     this.cars = [
-      { id: '1', name: 'Toyota Camry', licensePlate: 'ABC123', userPhone: '123-456-7890', status: 'Parked' },
-      { id: '2', name: 'Honda Civic', licensePlate: 'XYZ789', userPhone: '987-654-3210', status: 'Unparked' },
+      { id: '1', name: 'Toyota Camry', licensePlate: 'ABC123', userPhone: '9907580726', status: 'Parked' },
+      { id: '2', name: 'Honda Civic', licensePlate: 'XYZ789', userPhone: '9749494476', status: 'Unparked' },
     ];
     this.filteredCars = this.cars;
   }
