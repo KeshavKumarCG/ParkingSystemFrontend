@@ -5,6 +5,7 @@ import { ValetinfopageComponent } from './pages/valetinfopage/valetinfopage.comp
 import { ValetLandingPageComponent } from './pages/valet-landing-page/valet-landing-page.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { UnauthorisedLoginPageComponent } from './pages/unauthorised-login-page/unauthorised-login-page.component';
+import { PageNotFound404Component } from './pages/page-not-found-404/page-not-found-404.component';
 
 export const routes: Routes = [
       // Default route
@@ -15,5 +16,5 @@ export const routes: Routes = [
     { path: 'valet/notifications', component: NotificationsComponent },
     { path: 'carstatus', component: UnauthorisedLoginPageComponent },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: '**', redirectTo: '' }  // Redirect unknown routes to WelcomePageComponent
+    { path: '**', component: PageNotFound404Component }
 ];
