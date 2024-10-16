@@ -1,0 +1,32 @@
+.card {
+  border-radius: 15px;
+}
+
+.card-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.table th {
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 0.9em;
+  padding: 0.5em 0.7em;
+}
+
+.btn-sm {
+  font-size: 0.85em;
+  padding: 0.25em 0.5em;
+}
+
+.alert {
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.9em;
+  }
+}

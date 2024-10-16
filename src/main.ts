@@ -7,8 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
-bootstrapApplication(AppComponent, appConfig)
+bootstrapApplication(AppComponent, {
+  ...appConfig,
+  providers: [
+    ...(appConfig.providers || []),
+    importProvidersFrom(HttpClientModule, NgbModule)
+  ]
+})
   .catch((err) => console.error(err));
-
 
 

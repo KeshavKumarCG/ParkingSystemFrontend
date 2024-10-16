@@ -84,6 +84,9 @@ interface CarRequest {
   styleUrls: ['./request-table-user.component.scss']
 })
 export class RequestTableUserComponent implements OnInit {
+// cancelRequest(arg0: string) {
+// throw new Error('Method not implemented.');
+// }
   carRequests: CarRequest[] = [];
   columns: {field: keyof CarRequest, header: string}[] = [
     {field: 'carName', header: 'Car'},
