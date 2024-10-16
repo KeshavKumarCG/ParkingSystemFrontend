@@ -6,17 +6,19 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-
   constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const expectedRole = route.data['role'];
-    const userRole = this.authService.getUserRole(); // Assuming you have this method to get the user's role
+    const userRole = this.authService.getUserRole();
+
+    console.log(`Expected Role: ${expectedRole}, User Role: ${userRole}`); // Debugging line
 
     if (this.authService.isAuthenticated() && userRole === expectedRole) {
-      return true;  // Allow access if authenticated and roles match
+      return true; // Allow access if authenticated and roles match
     } else {
-      this.router.navigate(['/login']);  // Redirect to login if not authenticated or roles don't match
+      console.warn('Access denied. Redirecting to login.'); // More informative log
+      this.router.navigate(['/login']); // Redirect to login if not authenticated or roles don't match
       return false;
     }
   }

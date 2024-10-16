@@ -13,10 +13,10 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     
     // Protect these routes with AuthGuard
-    { path: 'user/home', component: UserHomePageComponent, canActivate: [AuthGuard], data: { role: 'user' } },
-    { path: 'valet/home', component: ValetLandingPageComponent, canActivate: [AuthGuard], data: { role: 'valet' } },
-    { path: 'valet/info', component: ValetinfopageComponent, canActivate: [AuthGuard], data: { role: 'valet' } },
-    { path: 'valet/notifications', component: NotificationsComponent, canActivate: [AuthGuard], data: { role: 'valet' } },
+    { path: 'user/home', component: UserHomePageComponent, canActivate: [AuthGuard], data: { role: 'User' } },
+    { path: 'valet/home', component: ValetLandingPageComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
+    { path: 'valet/info', component: ValetinfopageComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
+    { path: 'valet/notifications', component: NotificationsComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
     
     // Unprotected routes
     { path: 'carstatus', component: UnauthorisedLoginPageComponent },
