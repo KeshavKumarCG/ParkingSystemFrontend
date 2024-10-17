@@ -5,8 +5,6 @@ import { ValetinfopageComponent } from './pages/valetinfopage/valetinfopage.comp
 import { ValetLandingPageComponent } from './pages/valet-landing-page/valet-landing-page.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { UnauthorisedLoginPageComponent } from './pages/unauthorised-login-page/unauthorised-login-page.component';
-
-// Import AuthGuard
 import { AuthGuard } from './Services/auth.guard.service';
 
 export const routes: Routes = [
