@@ -39,3 +39,15 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+/* valetinfopage.component.scss */
+.btn-custom {
+  background-color: #343a40; /* Replace with your theme color */
+  border-color: #343a40; /* Replace with your theme color */
+  color: white; /* Text color */
+
+  &:hover {
+    background-color: #23272b; /* Darker shade for hover effect */
+    border-color: #1d2124; /* Darker shade for hover effect */
+  }
+}

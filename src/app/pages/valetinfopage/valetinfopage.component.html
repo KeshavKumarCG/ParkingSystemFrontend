@@ -1,40 +1,36 @@
 <app-navbar ngSkipHydration></app-navbar>
-  <!-- Main Container -->
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-12">
-        <div class="card mt-5 shadow-sm">
+<!-- Main Container -->
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card mt-5 shadow-sm border">
+        
+        <!-- Card Header -->
+        <div class="card-header text-center bg-dark text-white">
+          <h3>Valet Details</h3>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
           
-          <!-- Card Header -->
-          <div class="card-header text-center text-white">
-            <h3>Valet Details</h3>
+          <div class="row justify-content-center">
+            <!-- Left Column: Valet Details -->
+            <div class="col-md-6 text-center">
+              <p><strong>Name:</strong> John Doe</p>
+              <p><strong>ID:</strong> 12345</p>
+              <p><strong>Phone:</strong> 123-456-7890</p>
+            </div>  
           </div>
+          <hr>
 
-          <!-- Card Body -->
-          <div class="card-body">
-            <!-- Valet Information Section -->
-            <h5 class="text-center mb-4">Valet Information</h5>
-            <div class="row">
-              <!-- Left Column: Valet Details -->
-              <div class="col-md-6">
-                <p><strong>Name:</strong> John Doe</p>
-                <p><strong>Employee ID:</strong> 12345</p>
-                <p><strong>Shift:</strong> 9 AM - 5 PM</p>
-              </div>  
-            </div>
-
-
-            <hr>
-
-            <!-- Action Button to Contact Valet -->
-            <div class="text-center">
-              <a href="valet/contact" class="btn contact-btn btn-lg btn-block">
-                Contact Valet
-              </a>
-            </div>
+          <!-- Action Button to Contact Valet -->
+          <div class="text-center">
+            <a href="valet/contact" class="btn btn-primary">
+              <i class="fas fa-phone-alt"></i> Contact Valet
+            </a>
           </div>
-
         </div>
       </div>
     </div>
   </div>
+</div>
