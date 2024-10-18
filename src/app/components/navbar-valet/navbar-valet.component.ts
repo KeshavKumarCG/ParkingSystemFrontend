@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+// import { NotificationService } from '../../Services/notification-service.service'; // Import the NotificationService
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -6,8 +7,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './navbar-valet.component.html',
-  styleUrl: './navbar-valet.component.scss'
+  styleUrls: ['./navbar-valet.component.css']
 })
 export class NavbarValetComponent {
-
 }

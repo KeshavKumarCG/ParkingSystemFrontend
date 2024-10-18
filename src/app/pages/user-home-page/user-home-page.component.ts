@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http'; // Import HttpClientModule
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-
+ 
 @Component({
   selector: 'app-user-home-page',
   standalone: true, // Indicate that this is a standalone component
@@ -12,22 +12,22 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 })
 export class UserHomePageComponent {
   showModal: boolean = false;
-
+ 
   constructor(private http: HttpClient) {}
-
+ 
   openModal() {
     this.showModal = true;
   }
-
+ 
   closeModal() {
     this.showModal = false;
   }
-
+ 
   handleClick() {
     this.openModal(); // Open modal
     this.takeCar();   // Send notification data
   }
-
+ 
   takeCar() {
     const notificationData = {
         userName: 'Harshdeep Singh',
@@ -35,7 +35,7 @@ export class UserHomePageComponent {
         carNumber: 'PB65K2272',
         carModel: 'Toyota Camry',
     };
-
+ 
     this.http.post('http://localhost:4200/valet/notifications', notificationData)
       .subscribe(
         response => {
@@ -49,5 +49,4 @@ export class UserHomePageComponent {
         }
       );
 }
-
 }
