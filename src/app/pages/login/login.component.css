@@ -10,3 +10,12 @@ html, body {
     height: 100vh; /* Full height */
   }
   
+  .bg-dark{
+    background-color: rgb(0, 44, 63) !important;
+  }
+
+  .btn-warning{
+    background-color: #fbb516 !important;
+    font-weight: 600;
+    color: rgb(0, 44, 63) ;
+  }
