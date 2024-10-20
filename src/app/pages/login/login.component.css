@@ -9,4 +9,8 @@ html, body {
     align-items: center; /* Vertical centering */
     height: 100vh; /* Full height */
   }
+
+  .btn {
+    background-color: rgba(254,198,46,255);
+  }
   

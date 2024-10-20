@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -18,17 +19,19 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
+
     this.authService.login({ emailOrPhone: this.emailOrPhone, password: this.password }).subscribe({
       next: (response) => {
         // Handle successful login, store JWT, and redirect
         console.log('Login successful', response);
-        localStorage.setItem('token', response.token); // Store the token (assuming it's in the response)
+        localStorage.setItem('token', response.token); 
+        localStorage.setItem('Id', response.ID);
 
         // Redirect based on user role (adjust as necessary)
         if (response.role === 'User') {
-          this.router.navigate(['/user/home']);
+          this.router.navigate([`/user/home/${response.ID}`]);
         } else if (response.role === 'Valet') {
-          this.router.navigate(['/valet/home']);
+          this.router.navigate([`/valet/home/${response.ID}`]);
         }
       },
       error: (error: any) => {
