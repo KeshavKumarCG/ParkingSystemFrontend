@@ -13,4 +13,8 @@ html, body {
   .btn {
     background-color: rgba(254,198,46,255);
   }
+
+  .btn:hover{
+    background-color: rgba(254,198,50,255);
+  }
   
