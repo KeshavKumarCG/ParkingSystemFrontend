@@ -5,9 +5,9 @@ html, body {
   
   .container {
     display: flex;
-    justify-content: center; /* Horizontal centering */
-    align-items: center; /* Vertical centering */
-    height: 100vh; /* Full height */
+    justify-content: center;
+    align-items: center; 
+    height: 100vh;
   }
   
   .bg-dark{
