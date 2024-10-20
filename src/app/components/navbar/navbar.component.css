@@ -2,3 +2,9 @@ img{
     height: 25px;
     margin-right: 10px;
 }
+
+.navbar{
+    font-weight: 400;
+    background-color: white !important;
+    box-shadow: 4px 0 4px 0 #00000026;
+}
