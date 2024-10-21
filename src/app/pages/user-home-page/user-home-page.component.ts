@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http'; // Import HttpClientModule
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { NotificationService } from '../../Services/notification.service'; // Import the NotificationService
  
 @Component({
   selector: 'app-user-home-page',
@@ -13,7 +14,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 export class UserHomePageComponent {
   showModal: boolean = false;
  
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private notificationService: NotificationService) {}
  
   openModal() {
     this.showModal = true;
@@ -36,7 +37,7 @@ export class UserHomePageComponent {
         carModel: 'Toyota Camry',
     };
  
-    this.http.post('http://localhost:4200/valet/notifications', notificationData)
+    this.http.post('http://localhost:5221/valet/notifications', notificationData)
       .subscribe(
         response => {
           console.log('Notification sent successfully:', response);
@@ -48,5 +49,9 @@ export class UserHomePageComponent {
           console.error('Error response:', error.error);
         }
       );
+
+      console.log('Button clicked!');
+    // This will trigger an increase in the notification count
+    this.notificationService.increaseNotificationCount();
 }
 }
