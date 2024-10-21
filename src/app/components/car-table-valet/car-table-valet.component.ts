@@ -1,56 +1,4 @@
 
-
-// import { Component, OnInit } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { FormsModule } from '@angular/forms';
-
-// interface Car {
-//   id: string;
-//   name: string;
-//   licensePlate: string;
-//   userPhone: string;
-//   status: 'Parked' | 'Unparked';
-// }
-
-// @Component({
-//   selector: 'app-car-table-valet',
-//   templateUrl: './car-table-valet.component.html',
-//   styleUrls: ['./car-table-valet.component.scss'],
-//   standalone: true,
-//   imports: [CommonModule, FormsModule]
-// })
-// export class CarTableValetComponent implements OnInit {
-//   searchTerm: string = '';
-//   cars: Car[] = [];
-//   filteredCars: Car[] = [];
-// columns: any;
-
-//   ngOnInit() {
-//     // Initialize your cars array here or fetch from a service
-//     this.cars = [
-//       { id: '1', name: 'Toyota Camry', licensePlate: 'ABC123', userPhone: '9907580726', status: 'Parked' },
-//       { id: '2', name: 'Honda Civic', licensePlate: 'XYZ789', userPhone: '9749494476', status: 'Unparked' },
-//     ];
-//     this.filteredCars = this.cars;
-//   }
-
-//   onSearch() {
-//     this.filteredCars = this.cars.filter(car =>
-//       car.id.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-//       car.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-//       car.licensePlate.toLowerCase().includes(this.searchTerm.toLowerCase())
-//     );
-//   }
-
-//   toggleCarStatus(carId: string) {
-//     const car = this.cars.find(c => c.id === carId);
-//     if (car) {
-//       car.status = car.status === 'Parked' ? 'Unparked' : 'Parked';
-//     }
-//     this.onSearch(); // Refresh the filtered list
-//   }
-// }
-
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -70,6 +18,9 @@ interface Car {
   imports: [CommonModule],
 })
 export class CarTableValetComponent implements OnInit {
+toggleCarStatus(arg0: string) {
+throw new Error('Method not implemented.');
+}
   cars: Car[] = [];
   filteredCars: Car[] = [];
   searchTerm: string = '';
@@ -101,25 +52,5 @@ export class CarTableValetComponent implements OnInit {
       car.carNumber.toLowerCase().includes(searchTerm) ||
       car.phoneNumber.toLowerCase().includes(searchTerm)
     );
-  }
-
-  toggleCarStatus(carID: string) {
-    const car = this.cars.find(c => c.carID === carID);
-    if (car) {
-      car.status = car.status === 'parked' ? 'unparked' : 'parked';
-      this.updateCarStatus(car);
-    }
-  }
-
-  updateCarStatus(car: Car) {
-    this.http.put(`http://localhost:5221/api/SearchFunctionality/updateStatus/${car.carID}`, { status: car.status })
-      .subscribe(
-        () => {
-          console.log('Car status updated successfully');
-        },
-        (error) => {
-          console.error('Error updating car status:', error);
-        }
-      );
   }
 }
