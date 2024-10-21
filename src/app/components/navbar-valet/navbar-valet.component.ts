@@ -7,9 +7,9 @@ import { NotificationService } from '../../notification.service';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './navbar-valet.component.html',
-  styleUrl: './navbar-valet.component.scss'
+  styleUrls: ['./navbar-valet.component.scss']
 })
-export class NavbarValetComponent implements OnInit{
+export class NavbarValetComponent implements OnInit {
   notificationCount: number = 0;
 
   constructor(private notificationService: NotificationService) {}
