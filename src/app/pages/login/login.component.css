@@ -5,16 +5,22 @@ html, body {
   
   .container {
     display: flex;
-    justify-content: center; /* Horizontal centering */
-    align-items: center; /* Vertical centering */
-    height: 100vh; /* Full height */
-  }
-
-  .btn {
-    background-color: rgba(254,198,46,255);
-  }
-
-  .btn:hover{
-    background-color: rgba(254,198,50,255);
+    justify-content: center;
+    align-items: center; 
+    height: 100vh;
   }
   
+  .bg-dark{
+    background-color: rgb(0, 44, 63) !important;
+  }
+
+  .btn-warning{
+    background-color:  #fbb516 !important;
+    font-weight: 600;
+    color: rgb(0, 44, 63) ;
+  }
+  
+  .btn-warning:hover{
+    background-color:  #fcda8a !important;
+    color: rgb(0, 44, 63) ;
+  }

@@ -4,23 +4,18 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserDetailsService {
-  private baseUrl = `http://localhost:5221/api/Users/`;
+  private baseUrl = 'http://localhost:5221/api/Users/';
 
-  async getUserDetailsById(id: string | null): Promise<any> {
-    console.log('Input id:', id);  // Log the input id
-
+  async getUserDetailsById(id: string | null): Promise<UserDetails> {
     if (!id) {
-      id = localStorage.getItem('Id');
-      console.log('Id from localStorage:', id);  // Log the id from localStorage
+      id = localStorage.getItem('Id'); // Get the ID from local storage if not provided
     }
 
     if (!id) {
-      console.error('User ID is not available');
       throw new Error('User ID is required to fetch user details.');
     }
 
     try {
-      console.log('Fetching user details for id:', id);  // Log the final id being used
       const response = await fetch(`${this.baseUrl}${id}`, {
         method: 'GET',
         credentials: 'include',
@@ -32,16 +27,22 @@ export class UserDetailsService {
 
       if (!response.ok) {
         const errorDetails = await response.text();
-        console.error('API error response:', errorDetails);  // Log the error details
         throw new Error(`Failed to fetch user details: ${errorDetails}`);
       }
 
-      const userData = await response.json();
-      console.log('User data received:', userData);  // Log the received user data
+      const userData: UserDetails = await response.json();
       return userData;
     } catch (error) {
-      console.error('Error fetching user details:', error);
-      throw error;  // Re-throw the error instead of returning null
+      throw error;
     }
   }
+}
+
+// Define the UserDetails interface to match the API response
+interface UserDetails {
+  id: number;
+  cygid: string;
+  name: string;
+  phoneNumber: string; // Changed to phoneNumber to match API response
+  email: string;
 }

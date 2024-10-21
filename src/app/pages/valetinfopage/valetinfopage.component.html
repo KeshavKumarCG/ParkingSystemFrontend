@@ -1,40 +1,25 @@
 <app-navbar ngSkipHydration></app-navbar>
-  <!-- Main Container -->
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-12">
-        <div class="card mt-5 shadow-sm">
-          
-          <!-- Card Header -->
-          <div class="card-header text-center text-white">
-            <h3>Valet Details</h3>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card mt-5 shadow-sm">
+        
+        <div class="card-header bg-dark text-center text-white">
+          <h3>Valet Details</h3>
+        </div>
+
+        <div class="card-body">
+          <h5 class="text-center mb-4">Valet Information</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Name:</strong> {{ valetDetails?.name || 'Fetching data from backend...' }}</p>
+              <p><strong>Mobile:</strong> {{ valetDetails?.phoneNumber || 'Fetching data from backend...' }}</p>
+              <p><strong>Email:</strong> {{ valetDetails?.email || 'Fetching data from backend...' }}</p>
+            </div>  
           </div>
-
-          <!-- Card Body -->
-          <div class="card-body">
-            <!-- Valet Information Section -->
-            <h5 class="text-center mb-4">Valet Information</h5>
-            <div class="row">
-              <!-- Left Column: Valet Details -->
-              <div class="col-md-6">
-                <p><strong>Name:</strong> John Doe</p>
-                <p><strong>Employee ID:</strong> 12345</p>
-                <p><strong>Shift:</strong> 9 AM - 5 PM</p>
-              </div>  
-            </div>
-
-
-            <hr>
-
-            <!-- Action Button to Contact Valet -->
-            <div class="text-center">
-              <a href="valet/contact" class="btn contact-btn btn-lg btn-block">
-                Contact Valet
-              </a>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
   </div>
+</div>

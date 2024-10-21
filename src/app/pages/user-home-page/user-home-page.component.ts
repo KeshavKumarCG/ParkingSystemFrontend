@@ -4,14 +4,14 @@ import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { UserDetailsService } from '../../Services/user.details.service';
 
-// Define an interface for user details
+// Define the UserDetails interface
 interface UserDetails {
-  name: string;
+  id: number;
   cygid: string;
-  phone: string;
+  name: string;
+  phoneNumber: string; // Ensure this matches the API response
   email: string;
 }
-
 
 @Component({
   selector: 'app-user-home-page',
@@ -29,7 +29,22 @@ export class UserHomePageComponent implements OnInit {
 
   async ngOnInit() {
     const userId = localStorage.getItem('Id');
-    console.log('User ID:', userId);
+    const name = localStorage.getItem('name');
+    if (userId) {
+      try {
+      this.userDetails = await this.userDetailsService.getUserDetailsById(userId);
+      if (this.userDetails) {
+        localStorage.setItem('name', this.userDetails.name);
+      }
+      console.log('User details:', this.userDetails);
+      } catch (error) {
+      console.error('Error retrieving user details:', error);
+      }
+    } else {
+      console.error('User ID is undefined or not found in local storage.');
+    }
+
+    console.log('User ID , name from localStorage:', name);
 
     if (userId) {
       try {
@@ -37,12 +52,9 @@ export class UserHomePageComponent implements OnInit {
         console.log('User details:', this.userDetails);
       } catch (error) {
         console.error('Error retrieving user details:', error);
-        // Handle error appropriately, e.g., show an alert or modal
       }
     } else {
       console.error('User ID is undefined or not found in local storage.');
-      // Handle the case where the user ID is not available
-      // For example, redirect to login page or show an error message
     }
   }
 
