@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // Import HttpClientModule
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { NotificationService } from '../../Services/notification.service'; // Import the NotificationService
  
 @Component({
   selector: 'app-user-home-page',
@@ -14,7 +13,7 @@ import { NotificationService } from '../../Services/notification.service'; // Im
 export class UserHomePageComponent {
   showModal: boolean = false;
  
-  constructor(private http: HttpClient, private notificationService: NotificationService) {}
+  constructor(private http: HttpClient) {}
  
   openModal() {
     this.showModal = true;
@@ -48,6 +47,4 @@ export class UserHomePageComponent {
       );
 
       console.log('Button clicked!');
-    // This will trigger an increase in the notification count
-    this.notificationService.increaseNotificationCount();
     }}
