@@ -17,9 +17,12 @@ export class NotificationService {
   increaseNotificationCount() {
     const currentCount = this.notificationCountSource.value;
     console.log('Current notification count:', currentCount);  // Add this for debugging
-  this.notificationCountSource.next(currentCount + 1);
-  console.log('New notification count:', this.notificationCountSource.value);  // Debug
+    this.notificationCountSource.next(currentCount + 1);
+    console.log('New notification count:', this.notificationCountSource.value);  // Debug
+  }
 
+  accessNotificationCount():number {
+    return this.notificationCountSource.value;
   }
 
   // // Method to decrease/reset the count

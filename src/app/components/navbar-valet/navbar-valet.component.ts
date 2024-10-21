@@ -1,25 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NotificationService } from '../../Services/notification.service';  // Adjust the path accordingly
+import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar-valet',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
+  standalone: true, // Indicate that this is a standalone component
+  imports: [CommonModule, RouterModule], // Import CommonModule
   templateUrl: './navbar-valet.component.html',
   styleUrls: ['./navbar-valet.component.css']
 })
-export class NavbarValetComponent implements OnInit {
-  notificationCount: number = 0;
+export class NavbarComponent implements OnInit {
+  notificationCount: number = 0; // Initialize notification count
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {
-    // Subscribe to the notification count observable to update the bell icon badge
-    this.notificationService.notificationCount$.subscribe(count => {
-      // console.log('Notification count updated:', count);
-      next : () => this.notificationCount = count;
-    });
+  ngOnInit() {
+    this.fetchNotificationCount(); // Fetch notification count on component initialization
+  }
+
+  // Method to fetch notification count from the server
+  fetchNotificationCount() {
+    this.http.get<{ count: number }>('http://localhost:5221/valet/notifications/count') // Adjust API endpoint accordingly
+      .subscribe(response => {
+        this.notificationCount = response.count; // Set notification count
+      }, error => {
+        console.error('Error fetching notification count', error); // Handle error appropriately
+      });
   }
 }
