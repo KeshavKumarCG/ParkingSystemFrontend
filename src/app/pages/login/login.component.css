@@ -15,7 +15,12 @@ html, body {
   }
 
   .btn-warning{
-    background-color: #fbb516 !important;
+    background-color:  #fbb516 !important;
     font-weight: 600;
+    color: rgb(0, 44, 63) ;
+  }
+  
+  .btn-warning:hover{
+    background-color:  #fcda8a !important;
     color: rgb(0, 44, 63) ;
   }
