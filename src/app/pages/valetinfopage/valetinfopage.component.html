@@ -2,32 +2,25 @@
 <!-- Main Container -->
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card mt-5 shadow-sm border">
+    <div class="col-md-12">
+      <div class="card mt-5 shadow-sm">
         
         <!-- Card Header -->
-        <div class="card-header text-center bg-dark text-white">
+        <div class="card-header text-center text-white">
           <h3>Valet Details</h3>
         </div>
 
         <!-- Card Body -->
         <div class="card-body">
-          
-          <div class="row justify-content-center">
+          <!-- Valet Information Section -->
+          <h5 class="text-center mb-4">Valet Information</h5>
+          <div class="row">
             <!-- Left Column: Valet Details -->
-            <div class="col-md-6 text-center">
-              <p><strong>Name:</strong> John Doe</p>
-              <p><strong>ID:</strong> 12345</p>
-              <p><strong>Phone:</strong> 123-456-7890</p>
+            <div class="col-md-6">
+              <p><strong>Name:</strong> {{ valetDetails?.name || 'Loading...' }}</p>
+              <p><strong>Mobile:</strong> {{ valetDetails?.phoneNumber || 'Loading...' }}</p>
+              <p><strong>Email:</strong> {{ valetDetails?.email || 'Loading...' }}</p>
             </div>  
-          </div>
-          <hr>
-
-          <!-- Action Button to Contact Valet -->
-          <div class="text-center">
-            <a href="valet/contact" class="btn btn-primary">
-              <i class="fas fa-phone-alt"></i> Contact Valet
-            </a>
           </div>
         </div>
       </div>
