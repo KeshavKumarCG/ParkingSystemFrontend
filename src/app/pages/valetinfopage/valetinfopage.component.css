@@ -1,7 +1,6 @@
 .container {
   max-width: 600px;
 }
-
   
 .bg-dark{
   background-color: rgb(0, 44, 63) !important;
@@ -33,7 +32,6 @@
   color: white;
 }
 
-/* Styling for Valet Image */
 .valet-img {
   width: 100%;
   max-width: 150px;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ValetService } from '../../Services/valet.service'; // Import the valet service
+import { ValetService } from '../../Services/valet.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
@@ -10,18 +10,18 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
   styleUrls: ['./valetinfopage.component.css']
 })
 export class ValetinfopageComponent implements OnInit {
-  valetDetails: any; // This will hold the valet details
+  valetDetails: any;
 
   constructor(private valetService: ValetService) {}
 
   ngOnInit(): void {
-    const valetId = 2; // Example ID (this can be dynamic if you want)
+    const valetId = 2; 
     
-    // Fetch valet details from the API
+    
     this.valetService.getValetDetails(valetId).subscribe(
       (data) => {
-        this.valetDetails = data; // Store the valet details
-        console.log('Valet Details:', this.valetDetails); // For debugging
+        this.valetDetails = data; 
+        console.log('Valet Details:', this.valetDetails);
       },
       (error) => {
         console.error('Error fetching valet details:', error);

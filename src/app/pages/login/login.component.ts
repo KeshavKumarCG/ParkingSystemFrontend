@@ -20,11 +20,10 @@ export class LoginComponent {
   onLogin() {
     this.authService.login({ emailOrPhone: this.emailOrPhone, password: this.password }).subscribe({
       next: (response) => {
-        // Handle successful login, store JWT, and redirect
-        console.log('Login successful', response);
-        localStorage.setItem('token', response.token); // Store the token (assuming it's in the response)
 
-        // Redirect based on user role (adjust as necessary)
+        console.log('Login successful', response);
+        localStorage.setItem('token', response.token);
+
         if (response.role === 'User') {
           this.router.navigate(['/user/home']);
         } else if (response.role === 'Valet') {
