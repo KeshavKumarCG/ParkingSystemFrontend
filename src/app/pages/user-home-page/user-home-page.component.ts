@@ -1,24 +1,65 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../components/navbar/navbar.component'; 
-import { NotificationService } from '../../notification.service';
+import { RouterModule } from '@angular/router';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { UserDetailsService } from '../../Services/user.details.service';
+
+// Define the UserDetails interface
+interface UserDetails {
+  id: number;
+  cygid: string;
+  name: string;
+  phoneNumber: string; // Ensure this matches the API response
+  email: string;
+}
 
 @Component({
   selector: 'app-user-home-page',
-  standalone: true, 
-  imports: [CommonModule, NavbarComponent], 
+  standalone: true,
+  imports: [CommonModule, RouterModule, NavbarComponent],
   templateUrl: './user-home-page.component.html',
   styleUrls: ['./user-home-page.component.css'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA] // Add this line
+  providers: [UserDetailsService]
 })
-export class UserHomePageComponent {
-  showModal: boolean = false;
+export class UserHomePageComponent implements OnInit {
+  showModal = false;
+  userDetails: UserDetails | null = null;
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(private userDetailsService: UserDetailsService) {}
 
-  takeYourCar() {
-    this.notificationService.notifyValet(); // Notify valet
-    this.showModal = true; // Show modal
+  async ngOnInit() {
+    const userId = localStorage.getItem('Id');
+    const name = localStorage.getItem('name');
+    if (userId) {
+      try {
+      this.userDetails = await this.userDetailsService.getUserDetailsById(userId);
+      if (this.userDetails) {
+        localStorage.setItem('name', this.userDetails.name);
+      }
+      console.log('User details:', this.userDetails);
+      } catch (error) {
+      console.error('Error retrieving user details:', error);
+      }
+    } else {
+      console.error('User ID is undefined or not found in local storage.');
+    }
+
+    console.log('User ID , name from localStorage:', name);
+
+    if (userId) {
+      try {
+        this.userDetails = await this.userDetailsService.getUserDetailsById(userId);
+        console.log('User details:', this.userDetails);
+      } catch (error) {
+        console.error('Error retrieving user details:', error);
+      }
+    } else {
+      console.error('User ID is undefined or not found in local storage.');
+    }
+  }
+
+  openModal() {
+    this.showModal = true;
   }
 
   closeModal() {
