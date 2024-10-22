@@ -9,5 +9,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './navbar-valet.component.scss'
 })
 export class NavbarValetComponent {
+localStorage: any;
 
 }
