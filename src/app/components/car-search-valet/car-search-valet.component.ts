@@ -12,8 +12,7 @@ interface Car {
 
 @Component({
   selector: 'app-car-search-valet',
-  templateUrl: './car-search-valet.component.html',
-  styleUrls: ['./car-search-valet.component.scss'],
+  template: ``,
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
