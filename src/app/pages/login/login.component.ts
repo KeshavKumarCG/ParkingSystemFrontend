@@ -33,7 +33,7 @@ export class LoginComponent {
           Toastify({
             text: "Login successful",
             style: { background: "green" },
-            duration: 3000
+            duration: 2000
           }).showToast();
 
           // Redirect based on user role
