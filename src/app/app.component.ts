@@ -6,8 +6,6 @@ import { RouterModule } from '@angular/router';
 import { UserHomePageComponent } from './pages/user-home-page/user-home-page.component';
 import { ValetinfopageComponent } from './pages/valetinfopage/valetinfopage.component';
 
-
-
 @Component({
   selector: 'app-root',
   standalone: true,

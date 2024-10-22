@@ -5,7 +5,6 @@ import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
-import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +13,6 @@ import { style } from '@angular/animations';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
 export class LoginComponent {
   emailOrPhone: string = '';
   password: string = '';
@@ -24,15 +22,18 @@ export class LoginComponent {
   onLogin() {
     this.authService.login({ emailOrPhone: this.emailOrPhone, password: this.password }).subscribe({
       next: (response: any) => {
-        if (response && response.token && response.role && response.id) {
+        console.log('API Response:', response); // Log the response for inspection
+
+        // Check for 'token', 'role', and 'name'
+        if (response && response.token && response.role && response.name) {
           console.log('Login successful', response);
-          localStorage.setItem('token', response.token); 
-          localStorage.setItem('Id', response.id); 
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('name', response.name); // Storing name instead of Id
 
           // Show success toast
           Toastify({
             text: "Login successful",
-            style: { background: "green" },
+            backgroundColor: "green",
             duration: 3000
           }).showToast();
 
@@ -46,30 +47,28 @@ export class LoginComponent {
           console.error('Invalid response structure', response);
           Toastify({
             text: "Login failed: Invalid response",
-            style: { background: "red" },
+            backgroundColor: "red",
             duration: 3000
           }).showToast();
         }
       },
       error: (error: any) => {
         console.error('Login failed', error);
+        console.log('HTTP Status:', error.status); // Log HTTP status code
+
+        let errorMessage = "Login failed";
         if (error.status === 401) {
-          Toastify({
-            text: "Login failed: Unauthorized",
-            style: { background: "red" },
-            duration: 3000
-          }).showToast();
-        } else {
-          Toastify({
-            text: "Login failed",
-            style: { background: "red" },
-            duration: 3000
-          }).showToast();
+          errorMessage = "Login failed: Unauthorized";
+        } else if (error.error && error.error.message) {
+          errorMessage = `Login failed: ${error.error.message}`;
         }
+
+        Toastify({
+          text: errorMessage,
+          backgroundColor: "red",
+          duration: 3000
+        }).showToast();
       }
     });
   }
-
-
-  }
-
+}
