@@ -3,14 +3,19 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { UserDetailsService } from '../../Services/user.details.service';
+import { CarDetailsService } from '../../Services/cardetails.service';
 
-// Define the UserDetails interface
 interface UserDetails {
   id: number;
   cygid: string;
   name: string;
-  phoneNumber: string; // Ensure this matches the API response
+  phoneNumber: string; 
   email: string;
+}
+
+interface CarDetails {
+  carNumber: string;
+  carModel: string;
 }
 
 @Component({
@@ -19,42 +24,51 @@ interface UserDetails {
   imports: [CommonModule, RouterModule, NavbarComponent],
   templateUrl: './user-home-page.component.html',
   styleUrls: ['./user-home-page.component.css'],
-  providers: [UserDetailsService]
+  providers: [UserDetailsService, CarDetailsService] 
 })
 export class UserHomePageComponent implements OnInit {
   showModal = false;
   userDetails: UserDetails | null = null;
+  carDetails: CarDetails | null = null; 
 
-  constructor(private userDetailsService: UserDetailsService) {}
+  constructor(
+    private userDetailsService: UserDetailsService,
+    private carDetailsService: CarDetailsService
+  ) {}
 
   async ngOnInit() {
     const userId = localStorage.getItem('Id');
     const name = localStorage.getItem('name');
-    if (userId) {
-      try {
-      this.userDetails = await this.userDetailsService.getUserDetailsById(userId);
-      if (this.userDetails) {
-        localStorage.setItem('name', this.userDetails.name);
-      }
-      console.log('User details:', this.userDetails);
-      } catch (error) {
-      console.error('Error retrieving user details:', error);
-      }
-    } else {
-      console.error('User ID is undefined or not found in local storage.');
-    }
-
-    console.log('User ID , name from localStorage:', name);
 
     if (userId) {
       try {
         this.userDetails = await this.userDetailsService.getUserDetailsById(userId);
+        if (this.userDetails) {
+          localStorage.setItem('name', this.userDetails.name);
+          this.fetchCarDetails(userId); 
+        }
         console.log('User details:', this.userDetails);
       } catch (error) {
         console.error('Error retrieving user details:', error);
       }
     } else {
       console.error('User ID is undefined or not found in local storage.');
+    }
+
+    console.log('User ID , name from localStorage:', name);
+  }
+
+  async fetchCarDetails(userId: string) {
+    try {
+      const data: CarDetails[] = await this.carDetailsService.getCarDetailsByUserId(userId);
+      if (data.length > 0) {
+        this.carDetails = data[0]; 
+        console.log('Car details:', this.carDetails);
+      } else {
+        console.warn('No car details found for user:', userId);
+      }
+    } catch (error) {
+      console.error('Error retrieving car details:', error);
     }
   }
 
@@ -64,5 +78,37 @@ export class UserHomePageComponent implements OnInit {
 
   closeModal() {
     this.showModal = false;
+  }
+
+  handleClick() {
+    this.openModal(); 
+    this.takeCar();   
+  }
+
+  async takeCar() {
+    if (this.userDetails && this.carDetails) {
+      const notificationData = {
+        userName: this.userDetails.name,
+        phoneNumber: this.userDetails.phoneNumber,
+        carNumber: this.carDetails.carNumber,
+        carModel: this.carDetails.carModel,   
+      };
+
+      try {
+        const response = await fetch('http://localhost:5221/valet/notifications', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(notificationData)
+        });
+        const result = await response.json();
+        console.log('Notification sent successfully:', result);
+      } catch (error) {
+        console.error('Error sending notification:', error);
+      }
+
+      console.log('Button clicked!');
+    }
   }
 }

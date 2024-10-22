@@ -33,8 +33,9 @@ export class LoginComponent {
           // Show success toast
           Toastify({
             text: "Login successful",
-            backgroundColor: "green",
-            duration: 3000
+            style: { background: "green", marginTop: "52px" },
+            duration: 2000,
+            gravity: 'top',
           }).showToast();
 
           // Redirect based on user role
