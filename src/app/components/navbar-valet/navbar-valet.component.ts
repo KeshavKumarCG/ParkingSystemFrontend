@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -9,8 +9,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './navbar-valet.component.html',
   styleUrls: ['./navbar-valet.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   notificationCount: number = 0;
+  intervalId: any;
 
   router: any;
 
@@ -18,14 +19,20 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.fetchNotificationCount();
+    this.intervalId = setInterval(() => {
+      this.fetchNotificationCount();
+    }, 10000); 
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   logout() {
-    // Perform logout logic here, e.g., clearing tokens, etc.
     console.log('User logged out');
-    // Clear local storage
     localStorage.clear();
-    // Redirect to login or home page
   }
 
   async fetchNotificationCount() {
@@ -37,5 +44,4 @@ export class NavbarComponent implements OnInit {
       console.error('Error fetching notification count', error);
     }
   }
-
 }
