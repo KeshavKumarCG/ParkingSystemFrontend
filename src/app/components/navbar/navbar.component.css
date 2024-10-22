@@ -8,3 +8,8 @@ img{
     background-color: white !important;
     box-shadow: 4px 0 4px 0 #00000026;
 }
+
+.dropdown-item:active {
+    background-color: #ffffff; /* Change to your desired color */
+    color: rgb(0, 0, 0);  /* Optional: Change text color on click */
+  }

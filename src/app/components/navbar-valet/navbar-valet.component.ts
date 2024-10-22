@@ -12,10 +12,20 @@ import { CommonModule } from '@angular/common';
 export class NavbarComponent implements OnInit {
   notificationCount: number = 0;
 
+  router: any;
+
   constructor() {}
 
   ngOnInit() {
     this.fetchNotificationCount();
+  }
+
+  logout() {
+    // Perform logout logic here, e.g., clearing tokens, etc.
+    console.log('User logged out');
+    // Clear local storage
+    localStorage.clear();
+    // Redirect to login or home page
   }
 
   async fetchNotificationCount() {
@@ -27,4 +37,5 @@ export class NavbarComponent implements OnInit {
       console.error('Error fetching notification count', error);
     }
   }
+
 }
