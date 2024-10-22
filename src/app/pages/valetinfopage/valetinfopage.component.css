@@ -1,9 +1,9 @@
 .container {
   max-width: 600px;
 }
-
-.card-header {
-  background-color: #343a40;
+  
+.bg-dark{
+  background-color: rgb(0, 44, 63) !important;
 }
 
 .btn-block {
@@ -32,7 +32,6 @@
   color: white;
 }
 
-/* Styling for Valet Image */
 .valet-img {
   width: 100%;
   max-width: 150px;
