@@ -5,9 +5,8 @@ import { Observable, from } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5221/api/Auth/login'; // Your login API endpoint
+  private apiUrl = 'http://localhost:5221/api/Auth/login';
 
-  // Login function using fetch API
   login(credentials: { emailOrPhone: string; password: string }): Observable<any> {
     return from(
       fetch(this.apiUrl, {
@@ -20,23 +19,21 @@ export class AuthService {
     );
   }
 
-  // Check if the user is authenticated based on the token
   isAuthenticated(): boolean {
-    if (typeof window !== 'undefined') {
+    if (this.isBrowser()) {
       const token = localStorage.getItem('token');
-      return token !== null && !this.isTokenExpired(token); // Check token existence and expiration
+      return token !== null && !this.isTokenExpired(token);
     }
-    return false; // Not authenticated if localStorage is not available
+    return false;
   }
 
-  // Get user role from the token
   getUserRole(): string | null {
-    if (typeof window !== 'undefined') {
+    if (this.isBrowser()) {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
-          return payload.role; // Assuming the role is stored in the token payload
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          return payload.role;
         } catch (e) {
           console.error('Error decoding token', e);
         }
@@ -45,15 +42,18 @@ export class AuthService {
     return null;
   }
 
-  // Check if the token is expired
   private isTokenExpired(token: string): boolean {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      const exp = payload.exp; // Expiration time in the token (UNIX timestamp)
-      return exp ? (Math.floor(Date.now() / 1000) > exp) : false;
+      const exp = payload.exp;
+      return exp ? Math.floor(Date.now() / 1000) > exp : false;
     } catch (e) {
       console.error('Error checking token expiration', e);
-      return true; // Assume expired on error
+      return true;
     }
+  }
+
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
   }
 }
