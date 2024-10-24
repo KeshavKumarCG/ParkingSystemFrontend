@@ -30,9 +30,11 @@ export class LoginComponent {
 
           Toastify({
             text: "Login successful",
-            style: { background: "green" },
-            duration: 2000
+            style: { background: "green", marginTop: "52px" },
+            duration: 2000,
+            gravity: 'top',
           }).showToast();
+          
 
           if (response.role === 'User') {
             this.router.navigate([`/user/home/${response.id}`]);
