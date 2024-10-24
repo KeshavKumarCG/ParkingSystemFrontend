@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,12 +10,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./navbar-valet.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+
   notificationCount: number = 0;
   intervalId: any;
 
-  router: any;
-
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.fetchNotificationCount();
@@ -30,9 +29,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  goToHome() {
+    const id = localStorage.getItem('Id');
+    if (id) {
+      this.router.navigate([`/valet/home/${id}`]);
+    } else {
+      console.error('No user ID found in local storage.');
+      this.router.navigate(['/login']);
+    }
+  }
+
   logout() {
     console.log('User logged out');
     localStorage.clear();
+    this.router.navigate(['/login']); // Redirect to login after logout
   }
 
   async fetchNotificationCount() {

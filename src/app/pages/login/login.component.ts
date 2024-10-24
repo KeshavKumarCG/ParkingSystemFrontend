@@ -5,7 +5,6 @@ import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
-import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -27,21 +26,18 @@ export class LoginComponent {
         if (response && response.token && response.role && response.id) {
           console.log('Login successful', response);
           localStorage.setItem('token', response.token); 
-          localStorage.setItem('Id', response.id); 
+          localStorage.setItem('Id', response.id);
 
-          // Show success toast
           Toastify({
             text: "Login successful",
-            style: { background: "green", marginTop: "52px" },
-            duration: 2000,
-            gravity: 'top',
+            style: { background: "green" },
+            duration: 2000
           }).showToast();
 
-          // Redirect based on user role
           if (response.role === 'User') {
-            this.router.navigate([`/user/home/${response.token}`]);
+            this.router.navigate([`/user/home/${response.id}`]);
           } else if (response.role === 'Valet') {
-            this.router.navigate([`/valet/home/${response.token}`]);
+            this.router.navigate([`/valet/home/${response.id}`]);
           }
         } else {
           console.error('Invalid response structure', response);
@@ -70,7 +66,4 @@ export class LoginComponent {
       }
     });
   }
-
-
-  }
-
+}
