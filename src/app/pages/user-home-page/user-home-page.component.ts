@@ -14,8 +14,11 @@ interface UserDetails {
 }
 
 interface CarDetails {
+  carId: number;
   carNumber: string;
   carModel: string;
+  statusId: number;
+  status: string;
 }
 
 @Component({
@@ -78,6 +81,7 @@ export class UserHomePageComponent implements OnInit {
 
   closeModal() {
     this.showModal = false;
+    // status = 'In-transit';
   }
 
   handleClick() {
@@ -90,8 +94,11 @@ export class UserHomePageComponent implements OnInit {
       const notificationData = {
         userName: this.userDetails.name,
         phoneNumber: this.userDetails.phoneNumber,
+        carId: this.carDetails.carId,
         carNumber: this.carDetails.carNumber,
-        carModel: this.carDetails.carModel,   
+        carModel: this.carDetails.carModel, 
+        statusId: this.carDetails.statusId,
+        status: this.carDetails.status
       };
 
       try {
