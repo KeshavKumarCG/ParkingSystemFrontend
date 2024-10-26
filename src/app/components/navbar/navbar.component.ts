@@ -14,6 +14,13 @@ export class NavbarComponent {
   logout() {
     console.log('User logged out');
     localStorage.clear();
+    
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
     this.router.navigate(['/login']);
   }
 

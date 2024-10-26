@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UserDetailsService } from '../../Services/user.details.service';
 
 @Component({
   selector: 'app-navbar-valet',
@@ -10,13 +11,14 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./navbar-valet.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-
   notificationCount: number = 0;
   intervalId: any;
+  userName: string = ''; // Store the user's name
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userDetailsService: UserDetailsService) {}
 
   ngOnInit() {
+    this.fetchUserName(); 
     this.fetchNotificationCount();
     this.intervalId = setInterval(() => {
       this.fetchNotificationCount();
@@ -39,10 +41,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  async fetchUserName() {
+    const id = localStorage.getItem('Id');
+    try {
+      const userDetails = await this.userDetailsService.getUserDetailsById(id);
+      this.userName = userDetails.name; // Assign the name to userName variable
+    } catch (error) {
+      console.error('Failed to fetch user details', error);
+    }
+  }
+
   logout() {
     console.log('User logged out');
     localStorage.clear();
-    this.router.navigate(['/login']); // Redirect to login after logout
+    this.router.navigate(['/login']); 
   }
 
   async fetchNotificationCount() {
@@ -55,3 +67,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 }
+
+
+

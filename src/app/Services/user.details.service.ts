@@ -8,7 +8,7 @@ export class UserDetailsService {
 
   async getUserDetailsById(id: string | null): Promise<UserDetails> {
     if (!id) {
-      id = localStorage.getItem('Id'); // Get the ID from local storage if not provided
+      id = localStorage.getItem('Id'); 
     }
 
     if (!id) {
@@ -38,11 +38,11 @@ export class UserDetailsService {
   }
 }
 
-// Define the UserDetails interface to match the API response
+
 interface UserDetails {
   id: number;
   cygid: string;
   name: string;
-  phoneNumber: string; // Changed to phoneNumber to match API response
+  phoneNumber: string; 
   email: string;
 }
