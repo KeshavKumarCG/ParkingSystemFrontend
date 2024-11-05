@@ -1,4 +1,3 @@
-
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
@@ -26,11 +25,11 @@ export class RequestTableUserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fetchCarRequests();
-    this.startAutoRefresh();
+    this.startAutoRefresh(); 
   }
 
   ngOnDestroy() {
-    this.stopAutoRefresh();
+    this.stopAutoRefresh(); 
   }
 
   private startAutoRefresh() {
@@ -39,7 +38,7 @@ export class RequestTableUserComponent implements OnInit, OnDestroy {
         this.ngZone.run(() => {
           this.fetchCarRequests();
         });
-      }, 3000);
+      }, 2000);
     });
   }
 

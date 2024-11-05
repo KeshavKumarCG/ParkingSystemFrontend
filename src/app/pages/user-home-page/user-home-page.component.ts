@@ -9,7 +9,7 @@ interface UserDetails {
   id: number;
   cygid: string;
   name: string;
-  phoneNumber: string; 
+  phoneNumber: string;
   email: string;
 }
 
@@ -24,12 +24,12 @@ interface CarDetails {
   imports: [CommonModule, RouterModule, NavbarComponent],
   templateUrl: './user-home-page.component.html',
   styleUrls: ['./user-home-page.component.css'],
-  providers: [UserDetailsService, CarDetailsService] 
+  providers: [UserDetailsService, CarDetailsService]
 })
 export class UserHomePageComponent implements OnInit {
   showModal = false;
   userDetails: UserDetails | null = null;
-  carDetails: CarDetails | null = null; 
+  carDetails: CarDetails | null = null;
 
   constructor(
     private userDetailsService: UserDetailsService,
@@ -45,7 +45,7 @@ export class UserHomePageComponent implements OnInit {
         this.userDetails = await this.userDetailsService.getUserDetailsById(userId);
         if (this.userDetails) {
           localStorage.setItem('name', this.userDetails.name);
-          this.fetchCarDetails(userId); 
+          this.fetchCarDetails(userId);
         }
         console.log('User details:', this.userDetails);
       } catch (error) {
@@ -62,7 +62,7 @@ export class UserHomePageComponent implements OnInit {
     try {
       const data: CarDetails[] = await this.carDetailsService.getCarDetailsByUserId(userId);
       if (data.length > 0) {
-        this.carDetails = data[0]; 
+        this.carDetails = data[0];
         console.log('Car details:', this.carDetails);
       } else {
         console.warn('No car details found for user:', userId);
@@ -81,34 +81,57 @@ export class UserHomePageComponent implements OnInit {
   }
 
   handleClick() {
-    this.openModal(); 
-    this.takeCar();   
+    this.openModal();
+    this.takeCar();
   }
 
   async takeCar() {
     if (this.userDetails && this.carDetails) {
-      const notificationData = {
-        userName: this.userDetails.name,
-        phoneNumber: this.userDetails.phoneNumber,
-        carNumber: this.carDetails.carNumber,
-        carModel: this.carDetails.carModel,   
-      };
+        const smsNotificationData = {
+            ownerName: this.userDetails.name,
+            cygid: this.userDetails.cygid,
+            carModel: this.carDetails.carModel,
+            licensePlate: this.carDetails.carNumber,
+            ownerPhoneNumber: this.userDetails.phoneNumber
+        };
 
-      try {
-        const response = await fetch('http://localhost:5221/valet/notifications', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(notificationData)
-        });
-        const result = await response.json();
-        console.log('Notification sent successfully:', result);
-      } catch (error) {
-        console.error('Error sending notification:', error);
-      }
+        const notificationData = {
+            userName: this.userDetails.name,
+            phoneNumber: this.userDetails.phoneNumber,
+            carNumber: this.carDetails.carNumber,
+            carModel: this.carDetails.carModel,
+        };
 
-      console.log('Button clicked!');
+        try {
+            const [smsResponse, tableResponse] = await Promise.all([
+                fetch('http://localhost:5221/api/VehicleStatus/notify-valet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(smsNotificationData)
+                }),
+                fetch('http://localhost:5221/valet/notifications', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(notificationData)
+                })
+            ]);
+
+            const [smsResult, tableResult] = await Promise.all([
+                smsResponse.json(),
+                tableResponse.json()
+            ]);
+
+            console.log('SMS notification sent:', smsResult);
+            console.log('Table notification created:', tableResult);
+
+            this.openModal();
+        } catch (error) {
+            console.error('Error in notification process:', error);
+        }
     }
-  }
+}
 }

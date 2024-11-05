@@ -13,7 +13,7 @@ import { UserDetailsService } from '../../Services/user.details.service';
 export class NavbarComponent implements OnInit, OnDestroy {
   notificationCount: number = 0;
   intervalId: any;
-  userName: string = ''; // Store the user's name
+  userName: string = ''; 
 
   constructor(private router: Router, private userDetailsService: UserDetailsService) {}
 
@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const id = localStorage.getItem('Id');
     try {
       const userDetails = await this.userDetailsService.getUserDetailsById(id);
-      this.userName = userDetails.name; // Assign the name to userName variable
+      this.userName = userDetails.name; 
     } catch (error) {
       console.error('Failed to fetch user details', error);
     }

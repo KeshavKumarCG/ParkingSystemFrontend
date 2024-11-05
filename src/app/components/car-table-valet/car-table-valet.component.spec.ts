@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CarTableComponent } from './car-table-valet.component';
+import { CarTableValetComponent } from './car-table-valet.component';
 
 describe('CarTableValetComponent', () => {
-  let component: CarTableComponent;
-  let fixture: ComponentFixture<CarTableComponent>;
+  let component: CarTableValetComponent;
+  let fixture: ComponentFixture<CarTableValetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CarTableComponent]
+      imports: [CarTableValetComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CarTableComponent);
+    fixture = TestBed.createComponent(CarTableValetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
