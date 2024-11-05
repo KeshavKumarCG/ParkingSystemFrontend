@@ -46,7 +46,7 @@ export class LoginComponent {
             } else if (response.role === 'Valet') {
               this.router.navigate([`/valet/home/${response.id}`]);
             }
-          }); 
+          },1000); 
         } else {
           Toastify({
             text: "Login failed: Invalid response",
