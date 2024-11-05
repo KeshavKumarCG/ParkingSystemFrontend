@@ -1,0 +1,44 @@
+// src/app/loader/loader.component.scss
+:host {
+    position: fixed; /* Fixed positioning to overlay on the page */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white; /* White background */
+    z-index: 1000; /* Ensure it's on top of other content */
+}
+
+.ip {
+    width: 100px;
+    height: 40px;
+}
+
+.ip__track {
+    stroke: #d3d3d3;
+    transition: stroke var(--trans-dur);
+}
+
+.ip__worm1, .ip__worm2 {
+    animation: worm1 1s linear infinite;
+}
+
+.ip__worm2 {
+    animation-name: worm2;
+}
+
+@keyframes worm1 {
+    from { stroke-dashoffset: 0; }
+    50% { stroke-dashoffset: -358; }
+    50.01% { stroke-dashoffset: 358; }
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes worm2 {
+    from { stroke-dashoffset: 358; }
+    50% { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -358; }
+}
