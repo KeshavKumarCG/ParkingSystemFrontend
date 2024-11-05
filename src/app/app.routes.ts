@@ -10,14 +10,11 @@ import { AuthGuard } from './Services/auth.guard.service';
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     
-    // Protect these routes with AuthGuard
     { path: 'user/home/:id', component: UserHomePageComponent, canActivate: [AuthGuard], data: { role: 'User' } },
     { path: 'valet/home/:id', component: ValetLandingPageComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
     { path: 'valet/info', component: ValetinfopageComponent, canActivate: [AuthGuard], data: { role: 'User' } },
     { path: 'valet/notifications', component: NotificationsComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
     
-    // Unprotected routes
-    { path: 'carstatus', component: UnauthorisedLoginPageComponent },
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: '**', redirectTo: '' }  // Redirect unknown routes to WelcomePageComponent
+   
+    { path: '**', component: UnauthorisedLoginPageComponent }
 ];
