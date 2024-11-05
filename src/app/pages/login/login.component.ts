@@ -34,7 +34,7 @@ export class LoginComponent {
           Toastify({
             text: "Login successful",
             style: { background: "green"},//, marginTop: "52px" 
-            duration:1900,
+            duration:1500,
             gravity: 'top',
           }).showToast();
 
