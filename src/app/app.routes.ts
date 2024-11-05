@@ -4,8 +4,8 @@ import { UserHomePageComponent } from './pages/user-home-page/user-home-page.com
 import { ValetinfopageComponent } from './pages/valetinfopage/valetinfopage.component';
 import { ValetLandingPageComponent } from './pages/valet-landing-page/valet-landing-page.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
-import { UnauthorisedLoginPageComponent } from './pages/unauthorised-login-page/unauthorised-login-page.component';
 import { AuthGuard } from './Services/auth.guard.service';
+import { PageNotFound404Component } from './pages/page-not-found-404/page-not-found-404.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -17,5 +17,5 @@ export const routes: Routes = [
     
    
     { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: '**', redirectTo: 'login' }  
+    { path: '**', component: PageNotFound404Component }  
 ];
