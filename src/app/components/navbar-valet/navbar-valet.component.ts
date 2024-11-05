@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.fetchNotificationCount();
     this.intervalId = setInterval(() => {
       this.fetchNotificationCount();
-    }, 10000); 
+    }, 1000); 
   }
 
   ngOnDestroy() {
@@ -61,11 +61,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     try {
       const response = await fetch('http://localhost:5221/valet/notifications/count');
       const data = await response.json();
-      this.notificationCount = data.count;
+      this.notificationCount = data.count > 0 ? data.count : 0;
     } catch (error) {
       console.error('Error fetching notification count', error);
     }
   }
+  
 }
 
 
