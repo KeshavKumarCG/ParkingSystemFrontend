@@ -52,7 +52,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    console.log('User logged out');
     localStorage.clear();
     this.router.navigate(['/login']); 
   }
