@@ -22,15 +22,19 @@
           <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" placeholder="Password" required />
         </div>
     
-        <button type="submit" class="w-100 btn btn-lg btn-warning" [disabled]="checkingCredentials">Login</button>
-        
-        <div *ngIf="checkingCredentials" class="d-flex justify-content-center mt-3">
-          <div class="spinner-border text-warning" role="status">
+        <button *ngIf="!checkingCredentials" type="submit" class="w-100 btn btn-lg btn-warning" [disabled]="checkingCredentials">
+          Login
+        </button>
+    
+        <div *ngIf="checkingCredentials" class="w-100 d-flex justify-content-center mt-3">
+          <div class="spinner-border text-warning spinner-padding" role="status">
             <span class="sr-only">Checking login credentials...</span>
           </div>
         </div>
+        
       </form>
     </div>
+    
       
   </div>
   <app-loader *ngIf="loading"></app-loader>

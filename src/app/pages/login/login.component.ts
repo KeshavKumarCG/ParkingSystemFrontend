@@ -33,8 +33,8 @@ export class LoginComponent {
 
           Toastify({
             text: "Login successful",
-            style: { background: "green"},//, marginTop: "52px" 
-            duration:1500,
+            style: { background: "green" },
+            duration: 1500,
             gravity: 'top',
           }).showToast();
 
@@ -46,7 +46,7 @@ export class LoginComponent {
             } else if (response.role === 'Valet') {
               this.router.navigate([`/valet/home/${response.id}`]);
             }
-          },1000); 
+          }, 1000); 
         } else {
           Toastify({
             text: "Login failed: Invalid response",
