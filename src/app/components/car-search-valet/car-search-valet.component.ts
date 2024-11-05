@@ -19,11 +19,7 @@ interface Car {
 export class CarSearchValetComponent {
   searchTerm: string = '';
   showRequestTable: boolean = false;
-  cars: Car[] = [
-    // Sample data, replace with your actual data or API call
-    { id: '1', name: 'Toyota Camry', licensePlate: 'ABC123', userPhone: '123-456-7890', status: 'Parked' },
-    { id: '2', name: 'Honda Civic', licensePlate: 'XYZ789', userPhone: '987-654-3210', status: 'Unparked' },
-  ];
+  cars: Car[] = [];
 
   onSearch() {
     // Implement your search logic here
