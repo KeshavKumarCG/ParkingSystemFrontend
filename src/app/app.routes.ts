@@ -15,6 +15,8 @@ export const routes: Routes = [
     { path: 'valet/info', component: ValetinfopageComponent, canActivate: [AuthGuard], data: { role: 'User' } },
     { path: 'valet/notifications', component: NotificationsComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
     
-   
-    { path: '**', component: UnauthorisedLoginPageComponent }
+    // Unprotected routes
+    { path: 'carstatus', component: UnauthorisedLoginPageComponent },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: '**', redirectTo: '' }  
 ];
