@@ -41,6 +41,9 @@ export class LoginComponent {
           } else if (response.role === 'Valet') {
             this.router.navigate([`/valet/home/${response.id}`]);
           }
+          else if(response.role === 'Admin'){
+            this.router.navigate([`/admin/home/${response.id}`]);
+          }
         } else {
           console.error('Invalid response structure', response);
           Toastify({

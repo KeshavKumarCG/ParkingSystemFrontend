@@ -6,6 +6,7 @@ import { ValetLandingPageComponent } from './pages/valet-landing-page/valet-land
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { UnauthorisedLoginPageComponent } from './pages/unauthorised-login-page/unauthorised-login-page.component';
 import { AuthGuard } from './Services/auth.guard.service';
+import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -15,7 +16,7 @@ export const routes: Routes = [
     { path: 'valet/home/:id', component: ValetLandingPageComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
     { path: 'valet/info', component: ValetinfopageComponent, canActivate: [AuthGuard], data: { role: 'User' } },
     { path: 'valet/notifications', component: NotificationsComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
-    
+    {path : 'admin/home/:id', component: AdminPanelComponent, canActivate: [AuthGuard], data: { role: 'Admin' } },
     // Unprotected routes
     { path: 'carstatus', component: UnauthorisedLoginPageComponent },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
