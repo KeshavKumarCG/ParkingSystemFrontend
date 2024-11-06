@@ -37,16 +37,16 @@ export class LoginComponent {
             duration: 1500,
             gravity: 'top',
           }).showToast();
-
-          this.loading = true; 
           
-          setTimeout(() => {
-            if (response.role === 'User') {
-              this.router.navigate([`/user/home/${response.id}`]);
-            } else if (response.role === 'Valet') {
-              this.router.navigate([`/valet/home/${response.id}`]);
-            }
-          }, 1000); 
+
+          if (response.role === 'User') {
+            this.router.navigate([`/user/home/${response.id}`]);
+          } else if (response.role === 'Valet') {
+            this.router.navigate([`/valet/home/${response.id}`]);
+          }
+          else if(response.role === 'Admin'){
+            this.router.navigate([`/admin/home/${response.id}`]);
+          }
         } else {
           Toastify({
             text: "Login failed: Invalid response",
