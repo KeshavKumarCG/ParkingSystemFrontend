@@ -16,7 +16,9 @@ interface UserDetails {
 interface CarDetails {
   carNumber: string;
   carModel: string;
+  status: string; // New field for car status
 }
+
 
 @Component({
   selector: 'app-user-home-page',
