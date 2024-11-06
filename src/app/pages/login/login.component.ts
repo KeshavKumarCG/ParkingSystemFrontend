@@ -5,44 +5,49 @@ import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
+import { LoaderComponent } from '../../components/loader/loader.component'; 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LoaderComponent], 
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
 export class LoginComponent {
   emailOrPhone: string = '';
   password: string = '';
+  loading: boolean = false;
+  checkingCredentials: boolean = false; 
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
+    this.checkingCredentials = true; 
     this.authService.login({ emailOrPhone: this.emailOrPhone, password: this.password }).subscribe({
       next: (response: any) => {
+        this.checkingCredentials = false; 
         if (response && response.token && response.role && response.id) {
-          console.log('Login successful', response);
           localStorage.setItem('token', response.token); 
           localStorage.setItem('Id', response.id);
 
           Toastify({
             text: "Login successful",
-            style: { background: "green", marginTop: "52px" },
-            duration: 2000,
+            style: { background: "green" },
+            duration: 1500,
             gravity: 'top',
           }).showToast();
-          
 
-          if (response.role === 'User') {
-            this.router.navigate([`/user/home/${response.id}`]);
-          } else if (response.role === 'Valet') {
-            this.router.navigate([`/valet/home/${response.id}`]);
-          }
+          this.loading = true; 
+          
+          setTimeout(() => {
+            if (response.role === 'User') {
+              this.router.navigate([`/user/home/${response.id}`]);
+            } else if (response.role === 'Valet') {
+              this.router.navigate([`/valet/home/${response.id}`]);
+            }
+          }, 1000); 
         } else {
-          console.error('Invalid response structure', response);
           Toastify({
             text: "Login failed: Invalid response",
             style: { background: "red" },
@@ -51,7 +56,7 @@ export class LoginComponent {
         }
       },
       error: (error: any) => {
-        console.error('Login failed', error);
+        this.checkingCredentials = false; 
         if (error.status === 401) {
           Toastify({
             text: "Login failed: Unauthorized",

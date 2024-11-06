@@ -21,8 +21,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.fetchUserName(); 
     this.fetchNotificationCount();
     this.intervalId = setInterval(() => {
-      this.fetchNotificationCount();
-    }, 1000); 
+      this.fetchNotificationCount(); 
+    }, 10); 
   }
 
   ngOnDestroy() {
