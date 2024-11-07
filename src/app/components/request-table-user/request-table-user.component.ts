@@ -8,6 +8,7 @@ interface CarRequest {
   carNumber: string;
   carModel: string;
   notificationTime: string;
+  email: string;
 }
 
 @Component({
@@ -26,6 +27,7 @@ export class RequestTableUserComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchCarRequests();
     this.startAutoRefresh(); 
+    // this.handleClick();
   }
 
   ngOnDestroy() {

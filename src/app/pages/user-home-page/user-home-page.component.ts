@@ -90,19 +90,21 @@ export class UserHomePageComponent implements OnInit {
   async takeCar() {
     if (this.userDetails && this.carDetails) {
         const smsNotificationData = {
-            ownerName: this.userDetails.name,
+            UserName: this.userDetails.name,
             cygid: this.userDetails.cygid,
-            carModel: this.carDetails.carModel,
-            licensePlate: this.carDetails.carNumber,
-            ownerPhoneNumber: this.userDetails.phoneNumber
+            CarModel: this.carDetails.carModel,
+            CarNumber: this.carDetails.carNumber,
+            PhoneNumber: this.userDetails.phoneNumber,
+            Email: this.userDetails.email
         };
 
-        const notificationData = {
-            userName: this.userDetails.name,
-            phoneNumber: this.userDetails.phoneNumber,
-            carNumber: this.carDetails.carNumber,
-            carModel: this.carDetails.carModel,
-        };
+        // const notificationData = {
+        //     userName: this.userDetails.name,
+        //     phoneNumber: this.userDetails.phoneNumber,
+        //     carNumber: this.carDetails.carNumber,
+        //     carModel: this.carDetails.carModel,
+        //     userEmail: this.userDetails.email,
+        // };
 
         try {
             const [smsResponse, tableResponse] = await Promise.all([
@@ -118,7 +120,7 @@ export class UserHomePageComponent implements OnInit {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(notificationData)
+                    body: JSON.stringify(smsNotificationData)
                 })
             ]);
 
