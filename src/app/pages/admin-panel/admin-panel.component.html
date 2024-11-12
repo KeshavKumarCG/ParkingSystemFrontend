@@ -1,23 +1,22 @@
 <app-navbar-admin></app-navbar-admin>
 <div class="container my-4">
-  <!-- Search Bar -->
   <div class="row mb-3">
     <div class="col-md-9">
       <input
         type="text"
         class="form-control shadow-sm"
         placeholder="Search users..."
+        [(ngModel)]="searchQuery" 
         (input)="filterUsers()"
       />
     </div>
-    <div class="col-md-3 ">
+    <div class="col-md-3">
       <button class="btn btn-success shadow-sm" (click)="openCreateUserModal()">
         <i class="bi bi-person-plus-fill"></i> Add New User
       </button>
     </div>
   </div>
 
-  <!-- User Cards (Grid Layout) -->
   <div class="row">
     <div class="col-md-4 mb-4" *ngFor="let user of filteredUsers">
       <div class="card shadow-lg h-100">
@@ -41,8 +40,6 @@
               <i class="bi bi-trash"></i> Delete
             </button>
           </div>
-          
-          
         </div>
       </div>
     </div>
