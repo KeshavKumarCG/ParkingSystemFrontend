@@ -11,7 +11,7 @@ import { PageNotFound404Component } from './pages/page-not-found-404/page-not-fo
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     
-    // Protected routes with role-based access
+ 
     { path: 'user/home/:id', component: UserHomePageComponent, canActivate: [AuthGuard], data: { role: 3 } },
     { path: 'valet/home/:id', component: ValetLandingPageComponent, canActivate: [AuthGuard], data: { role: 2 } },
     { path: 'valet/info', component: ValetinfopageComponent, canActivate: [AuthGuard], data: { role: 3 } },
@@ -19,7 +19,7 @@ export const routes: Routes = [
     { path: 'admin/home/:id', component: AdminPanelComponent, canActivate: [AuthGuard], data: { role: 1 } },
   
     // Unprotected routes
-    { path: 'carstatus', component: UnauthorisedLoginPageComponent },
+    { path: 'carstatus', component: PageNotFound404Component },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: '**', redirectTo: '' }
   ];
