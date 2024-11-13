@@ -21,8 +21,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.fetchUserName(); 
     this.fetchNotificationCount();
     this.intervalId = setInterval(() => {
-      this.fetchNotificationCount();
-    }, 3000);
+      this.fetchNotificationCount(); 
+    }, 10); 
   }
 
   ngOnDestroy() {
@@ -67,10 +67,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      this.notificationCount = (data && data.count) ? data.count : 0;
+      this.notificationCount = data.count > 0 ? data.count : 0;
     } catch (error) {
       console.error('Error fetching notification count', error);
       this.notificationCount = 0;
     }
   }
+  
 }

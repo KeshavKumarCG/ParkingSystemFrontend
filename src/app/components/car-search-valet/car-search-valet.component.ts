@@ -22,8 +22,6 @@ export class CarSearchValetComponent {
   cars: Car[] = [];
 
   onSearch() {
-    // Implement your search logic here
-    // This should filter the cars based on the searchTerm
     this.cars = this.cars.filter(car =>
       car.id.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       car.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||

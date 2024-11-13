@@ -5,21 +5,25 @@ import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
+import { LoaderComponent } from '../../components/loader/loader.component'; 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LoaderComponent], 
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   emailOrPhone: string = '';
   password: string = '';
+  loading: boolean = false;
+  checkingCredentials: boolean = false; 
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
+    this.checkingCredentials = true; 
     this.authService.login({ emailOrPhone: this.emailOrPhone, password: this.password }).subscribe({
       next: (response: any) => {
         if (response && response.token && response.userId && response.role) {
@@ -30,8 +34,8 @@ export class LoginComponent {
 
           Toastify({
             text: "Login successful",
-            style: { background: "green", marginTop: "52px" },
-            duration: 2000,
+            style: { background: "green" },
+            duration: 1500,
             gravity: 'top',
           }).showToast();
 
@@ -50,7 +54,6 @@ export class LoginComponent {
               this.router.navigate(['/login']);
           }
         } else {
-          console.error('Invalid response structure', response);
           Toastify({
             text: "Login failed: Invalid response",
             style: { background: "red" },
