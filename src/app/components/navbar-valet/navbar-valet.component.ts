@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.fetchNotificationCount();
     this.intervalId = setInterval(() => {
       this.fetchNotificationCount();
-    }, 10000); 
+    }, 3000);
   }
 
   ngOnDestroy() {
@@ -43,30 +43,34 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   async fetchUserName() {
     const id = localStorage.getItem('Id');
+    if (!id) {
+      console.error('User ID is missing from local storage.');
+      return;
+    }
     try {
       const userDetails = await this.userDetailsService.getUserDetailsById(id);
-      this.userName = userDetails.name; 
+      this.userName = userDetails.name || 'Valet User';
     } catch (error) {
       console.error('Failed to fetch user details', error);
     }
   }
 
   logout() {
-    console.log('User logged out');
     localStorage.clear();
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/login']);
   }
 
   async fetchNotificationCount() {
     try {
-      const response = await fetch('http://localhost:5221/valet/notifications/count');
+      const response = await fetch('http://localhost:5221/api/valet/notifications/count');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
       const data = await response.json();
-      this.notificationCount = data.count;
+      this.notificationCount = (data && data.count) ? data.count : 0;
     } catch (error) {
       console.error('Error fetching notification count', error);
+      this.notificationCount = 0;
     }
   }
 }
-
-
-

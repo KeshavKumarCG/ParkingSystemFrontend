@@ -37,7 +37,7 @@ export class UserHomePageComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const userId = localStorage.getItem('Id');
+    const userId = localStorage.getItem('userId');
     const name = localStorage.getItem('name');
 
     if (userId) {
@@ -87,51 +87,40 @@ export class UserHomePageComponent implements OnInit {
 
   async takeCar() {
     if (this.userDetails && this.carDetails) {
-        const smsNotificationData = {
-            ownerName: this.userDetails.name,
-            cygid: this.userDetails.cygid,
-            carModel: this.carDetails.carModel,
-            licensePlate: this.carDetails.carNumber,
-            ownerPhoneNumber: this.userDetails.phoneNumber
-        };
+      const notificationData = {
+        userName: this.userDetails.name,
+        phoneNumber: this.userDetails.phoneNumber,
+        carNumber: this.carDetails.carNumber,
+        carModel: this.carDetails.carModel,
+        email: this.userDetails.email,
+      };
 
-        const notificationData = {
-            userName: this.userDetails.name,
-            phoneNumber: this.userDetails.phoneNumber,
-            carNumber: this.carDetails.carNumber,
-            carModel: this.carDetails.carModel,
-        };
+      try {
+       
+        const response = await fetch('http://localhost:5221/api/valet/notifications', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(notificationData),
+        });
 
-        try {
-            const [smsResponse, tableResponse] = await Promise.all([
-                fetch('http://localhost:5221/api/VehicleStatus/notify-valet', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(smsNotificationData)
-                }),
-                fetch('http://localhost:5221/valet/notifications', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(notificationData)
-                })
-            ]);
+        const result = await response.json();
 
-            const [smsResult, tableResult] = await Promise.all([
-                smsResponse.json(),
-                tableResponse.json()
-            ]);
-
-            console.log('SMS notification sent:', smsResult);
-            console.log('Table notification created:', tableResult);
-
-            this.openModal();
-        } catch (error) {
-            console.error('Error in notification process:', error);
+        // Handle successful response
+        if (response.ok) {
+          console.log('Notification created:', result);
+          this.openModal(); // Open the modal if successful
+        } else if (response.status === 409) {
+          console.warn('Conflict: Notification for this car and phone number already exists.');
+        } else if (response.status === 400) {
+          console.error('Bad Request: Invalid notification data.');
+        } else {
+          console.error('Unexpected error:', result);
         }
+      } catch (error) {
+        console.error('Error in notification process:', error);
+      }
     }
-}
+  }
 }

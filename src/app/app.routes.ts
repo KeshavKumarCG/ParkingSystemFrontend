@@ -11,14 +11,16 @@ import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     
-    // Protect these routes with AuthGuard
-    { path: 'user/home/:id', component: UserHomePageComponent, canActivate: [AuthGuard], data: { role: 'User' } },
-    { path: 'valet/home/:id', component: ValetLandingPageComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
-    { path: 'valet/info', component: ValetinfopageComponent, canActivate: [AuthGuard], data: { role: 'User' } },
-    { path: 'valet/notifications', component: NotificationsComponent, canActivate: [AuthGuard], data: { role: 'Valet' } },
-    {path : 'admin/home/:id', component: AdminPanelComponent, canActivate: [AuthGuard], data: { role: 'Admin' } },
+    // Protected routes with role-based access
+    { path: 'user/home/:id', component: UserHomePageComponent, canActivate: [AuthGuard], data: { role: 3 } },
+    { path: 'valet/home/:id', component: ValetLandingPageComponent, canActivate: [AuthGuard], data: { role: 2 } },
+    { path: 'valet/info', component: ValetinfopageComponent, canActivate: [AuthGuard], data: { role: 3 } },
+    { path: 'valet/notifications', component: NotificationsComponent, canActivate: [AuthGuard], data: { role: 2 } },
+    { path: 'admin/home/:id', component: AdminPanelComponent, canActivate: [AuthGuard], data: { role: 1 } },
+  
     // Unprotected routes
     { path: 'carstatus', component: UnauthorisedLoginPageComponent },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: '**', redirectTo: '' }  // Redirect unknown routes to WelcomePageComponent
-];
+    { path: '**', redirectTo: '' }
+  ];
+  

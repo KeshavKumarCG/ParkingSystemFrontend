@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'http://localhost:5221/api/Auth/login';
+
+  constructor(private router: Router) {}
 
   login(credentials: { emailOrPhone: string; password: string }): Observable<any> {
     return from(
@@ -15,8 +18,33 @@ export class AuthService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
-      }).then(response => response.json())
+      }).then(response => {
+        if (!response.ok) throw new Error('Login failed');
+        return response.json();
+      })
     );
+  }
+
+  handleLoginResponse(response: any): void {
+    if (response.token && response.userId && response.role) {
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('userId', response.userId.toString());
+      localStorage.setItem('role', response.role.toString());
+
+      // Redirect user based on role
+      if (response.role === 1) {
+        // User
+        this.router.navigate(['/user-home-page']);
+      } else if (response.role === 2) {
+        // Valet
+        this.router.navigate(['/valet-home-page']);
+      } else {
+        console.warn('Unknown role, redirecting to default home page');
+        this.router.navigate(['/home']);
+      }
+    } else {
+      console.error('Invalid login response:', response);
+    }
   }
 
   isAuthenticated(): boolean {
@@ -33,7 +61,7 @@ export class AuthService {
       if (token) {
         try {
           const payload = JSON.parse(atob(token.split('.')[1]));
-          return payload.role;
+          return payload.role; 
         } catch (e) {
           console.error('Error decoding token', e);
         }
@@ -57,4 +85,3 @@ export class AuthService {
     return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
   }
 }
-

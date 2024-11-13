@@ -13,7 +13,6 @@ import "toastify-js/src/toastify.css";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
 export class LoginComponent {
   emailOrPhone: string = '';
   password: string = '';
@@ -23,10 +22,11 @@ export class LoginComponent {
   onLogin() {
     this.authService.login({ emailOrPhone: this.emailOrPhone, password: this.password }).subscribe({
       next: (response: any) => {
-        if (response && response.token && response.role && response.id) {
+        if (response && response.token && response.userId && response.role) {
           console.log('Login successful', response);
-          localStorage.setItem('token', response.token); 
-          localStorage.setItem('Id', response.id);
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('userId', response.userId.toString());
+          localStorage.setItem('role', response.role.toString());
 
           Toastify({
             text: "Login successful",
@@ -34,40 +34,40 @@ export class LoginComponent {
             duration: 2000,
             gravity: 'top',
           }).showToast();
-          
 
-          if (response.role === 'User') {
-            this.router.navigate([`/user/home/${response.id}`]);
-          } else if (response.role === 'Valet') {
-            this.router.navigate([`/valet/home/${response.id}`]);
-          }
-          else if(response.role === 'Admin'){
-            this.router.navigate([`/admin/home/${response.id}`]);
+          switch (response.role) {
+            case 3: 
+              this.router.navigate([`/user/home/${response.userId}`]);
+              break;
+            case 2:
+              this.router.navigate([`/valet/home/${response.userId}`]);
+              break;
+            case 1: 
+              this.router.navigate([`/admin/home/${response.userId}`]);
+              break;
+            default:
+              console.warn('Unknown role, redirecting to default page');
+              this.router.navigate(['/login']);
           }
         } else {
           console.error('Invalid response structure', response);
           Toastify({
             text: "Login failed: Invalid response",
             style: { background: "red" },
-            duration: 3000
+            duration: 3000,
+            gravity: 'top',
           }).showToast();
         }
       },
       error: (error: any) => {
         console.error('Login failed', error);
-        if (error.status === 401) {
-          Toastify({
-            text: "Login failed: Unauthorized",
-            style: { background: "red" },
-            duration: 3000
-          }).showToast();
-        } else {
-          Toastify({
-            text: "Login failed",
-            style: { background: "red" },
-            duration: 3000
-          }).showToast();
-        }
+        const errorMessage = error.status === 401 ? "Login failed: Unauthorized" : "Login failed";
+        Toastify({
+          text: errorMessage,
+          style: { background: "red" },
+          duration: 3000,
+          gravity: 'top',
+        }).showToast();
       }
     });
   }
