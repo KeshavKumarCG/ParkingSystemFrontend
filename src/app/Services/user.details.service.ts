@@ -8,7 +8,7 @@ export class UserDetailsService {
 
   async getUserDetailsById(id: string | null): Promise<UserDetails> {
     if (!id) {
-      id = localStorage.getItem('Id'); 
+      id = localStorage.getItem('userId'); 
     }
 
     if (!id) {

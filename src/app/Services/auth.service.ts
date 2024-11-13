@@ -31,16 +31,20 @@ export class AuthService {
       localStorage.setItem('userId', response.userId.toString());
       localStorage.setItem('role', response.role.toString());
 
-      // Redirect user based on role
-      if (response.role === 1) {
-        // User
-        this.router.navigate(['/user-home-page']);
+     
+      if (response.role === 3) {
+        
+        this.router.navigate([`user/home/${response.userId}`]);
       } else if (response.role === 2) {
-        // Valet
-        this.router.navigate(['/valet-home-page']);
-      } else {
+      
+        this.router.navigate([`valet/home/${response.userId}`]);
+      } 
+      else if (response.role === 1) {
+        this.router.navigate([`admin/home/${response.userId}`]);
+      }
+      else {
         console.warn('Unknown role, redirecting to default home page');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/login']);
       }
     } else {
       console.error('Invalid login response:', response);

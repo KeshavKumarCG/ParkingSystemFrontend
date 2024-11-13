@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   goToHome() {
-    const id = localStorage.getItem('Id');
+    const id = localStorage.getItem('userId');
     if (id) {
       this.router.navigate([`/valet/home/${id}`]);
     } else {
@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   async fetchUserName() {
-    const id = localStorage.getItem('Id');
+    const id = localStorage.getItem('userId');
     if (!id) {
       console.error('User ID is missing from local storage.');
       return;
