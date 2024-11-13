@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarAdminComponent } from '../../components/navbar-admin/navbar-admin.component';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { FormsModule } from '@angular/forms';
 
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
-  imports: [CommonModule, NavbarAdminComponent, NavbarComponent, FormsModule], // Add FormsModule here
+  imports: [CommonModule, NavbarAdminComponent, FormsModule],
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.scss']
 })
@@ -23,9 +23,11 @@ export class AdminPanelComponent implements OnInit {
     { id: 6, name: 'Neha Desai', phoneNumber: '989-765-4321', email: 'neha.desai@example.com', role: 'User', carModel: 'Ford EcoSport', carNumber: 'MH 15 AK 8901' },
   ];
   filteredUsers: any[] = [];
+  newUser: any = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
+  selectedUser: any = null; // Track the user currently being edited
 
   ngOnInit(): void {
-    this.filteredUsers = this.users; // Initialize filtered users
+    this.filteredUsers = this.users;
   }
 
   filterUsers() {
@@ -37,19 +39,39 @@ export class AdminPanelComponent implements OnInit {
       user.carModel.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
-  
-
 
   openCreateUserModal() {
-    // Logic to open modal to create a new user
+    this.newUser = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
+    this.selectedUser = null; // Reset selectedUser
+    const createUserModal = new bootstrap.Modal(document.getElementById('createUserModal'));
+    createUserModal.show();
   }
 
-  editUser(user: any) {
-    // Logic to edit an existing user
+  openEditUserModal(user: any) {
+    this.selectedUser = { ...user }; // Copy user data to avoid direct binding
+    const editUserModal = new bootstrap.Modal(document.getElementById('createUserModal'));
+    editUserModal.show();
+  }
+
+  addUser() {
+    if (this.selectedUser) {
+      // Edit existing user
+      const index = this.users.findIndex(u => u.id === this.selectedUser.id);
+      if (index !== -1) {
+        this.users[index] = { ...this.selectedUser }; // Update user data
+      }
+      this.selectedUser = null; // Reset selectedUser after editing
+    } else {
+      // Add new user
+      this.users.push({ ...this.newUser, id: this.users.length + 1 });
+    }
+    this.filteredUsers = this.users; // Refresh filtered users list
+    this.newUser = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' }; // Reset newUser form
+    bootstrap.Modal.getInstance(document.getElementById('createUserModal')).hide();
   }
 
   deleteUser(user: any) {
-    // Logic to delete a user
+    this.users = this.users.filter(u => u !== user);
+    this.filteredUsers = this.users;
   }
 }
-
