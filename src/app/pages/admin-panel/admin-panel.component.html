@@ -59,7 +59,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="createUserModalLabel">Add New User</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times">X</i>
+        </button> -->
+        
       </div>
       <div class="modal-body">
         <form (ngSubmit)="addUser()">
@@ -76,9 +79,10 @@
             <input type="email" class="form-control" id="email" [(ngModel)]="newUser.email" name="email" required />
           </div>
           <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
-            <select class="form-select" id="role" [(ngModel)]="newUser.role" name="role" required>
+            <label for="role" class="form-label">Role&nbsp;&nbsp;</label>
+            <select class="form-select bg-warning" id="role" [(ngModel)]="newUser.role" name="role" required>
               <option value="User">User</option>
+              <option value="Admin">Valet</option>
               <option value="Admin">Admin</option>
             </select>
           </div>
