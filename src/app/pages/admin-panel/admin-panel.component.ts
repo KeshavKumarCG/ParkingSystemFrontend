@@ -24,7 +24,7 @@ export class AdminPanelComponent implements OnInit {
   ];
   filteredUsers: any[] = [];
   newUser: any = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
-  selectedUser: any = null; // Track the user currently being edited
+  selectedUser: any = null;
 
   ngOnInit(): void {
     this.filteredUsers = this.users;
@@ -42,32 +42,30 @@ export class AdminPanelComponent implements OnInit {
 
   openCreateUserModal() {
     this.newUser = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
-    this.selectedUser = null; // Reset selectedUser
+    this.selectedUser = null;
     const createUserModal = new bootstrap.Modal(document.getElementById('createUserModal'));
     createUserModal.show();
   }
 
   openEditUserModal(user: any) {
-    this.selectedUser = { ...user }; // Copy user data to avoid direct binding
+    this.selectedUser = { ...user }; 
     const editUserModal = new bootstrap.Modal(document.getElementById('createUserModal'));
     editUserModal.show();
   }
 
   addUser() {
     if (this.selectedUser) {
-      // Edit existing user
       const index = this.users.findIndex(u => u.id === this.selectedUser.id);
       if (index !== -1) {
-        this.users[index] = { ...this.selectedUser }; // Update user data
+        this.users[index] = { ...this.selectedUser }; 
+      this.selectedUser = null; 
+      } else {
+        this.users.push({ ...this.newUser, id: this.users.length + 1 });
       }
-      this.selectedUser = null; // Reset selectedUser after editing
-    } else {
-      // Add new user
-      this.users.push({ ...this.newUser, id: this.users.length + 1 });
+      this.filteredUsers = this.users; 
+      this.newUser = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
+      bootstrap.Modal.getInstance(document.getElementById('createUserModal')).hide();
     }
-    this.filteredUsers = this.users; // Refresh filtered users list
-    this.newUser = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' }; // Reset newUser form
-    bootstrap.Modal.getInstance(document.getElementById('createUserModal')).hide();
   }
 
   deleteUser(user: any) {
