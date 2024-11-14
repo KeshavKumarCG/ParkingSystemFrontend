@@ -23,20 +23,52 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
-    this.checkingCredentials = true; 
+    if (!this.emailOrPhone || !this.password) {
+      Toastify({
+        text: "Please fill in all fields",
+        style: { background: "red" },
+        duration: 3000,
+        gravity: 'top',
+      }).showToast();
+      return;
+    }
+
+    this.checkingCredentials = true;
+    this.loading = true;
+
     this.authService.login({ emailOrPhone: this.emailOrPhone, password: this.password }).subscribe({
       next: (response: any) => {
-        this.authService.handleLoginResponse(response); 
-        Toastify({
-          text: "Login successful",
-          style: { background: "green" },
-          duration: 1500,
-          gravity: 'top',
-        }).showToast();
+
+        if (response) {
+          this.authService.isAuthenticated();
+          this.checkingCredentials = false;
+          this.loading = false;
+          Toastify({
+            text: "Login successful",
+            style: { background: "green" },
+            duration: 1500,
+            gravity: 'top',
+          }).showToast();
+          const role = response.role;
+          if (role === "User") {
+            this.router.navigate([`user/home/${response.userId}`]);
+          } else if (role === "Valet") {
+            this.router.navigate([`valet/home/${response.userId}`]);
+          } else if (role === "Admin") {
+            this.router.navigate([`admin/home/${response.userId}`]);
+          } else {
+            console.warn('Unknown role, redirecting to default home page');
+            this.router.navigate(['/login']);
+          }
+        } else {
+          console.error('Invalid login response:', response);
+        }
       },
       error: (error: any) => {
         console.error('Login failed', error);
-        const errorMessage = error.status === 401 ? "Login failed: Unauthorized" : "Login failed";
+        this.checkingCredentials = false;
+        this.loading = false;
+        const errorMessage = error.status === 401 ? "Invalid credentials" : "Login failed. Please try again";
         Toastify({
           text: errorMessage,
           style: { background: "red" },
