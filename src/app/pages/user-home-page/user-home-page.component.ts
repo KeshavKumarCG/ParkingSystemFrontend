@@ -16,10 +16,8 @@ interface UserDetails {
 interface CarDetails {
   carNumber: string;
   carModel: string;
-  status: string; // New field for car status
+  status: string;
 }
-
-
 @Component({
   selector: 'app-user-home-page',
   standalone: true,
@@ -134,6 +132,5 @@ export class UserHomePageComponent implements OnInit {
         } catch (error) {
             console.error('Error in notification process:', error);
         }
-    }
-}
+    }   
 }
