@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
 interface CarRequest {
@@ -20,33 +20,28 @@ interface CarRequest {
 })
 export class RequestTableUserComponent implements OnInit, OnDestroy {
   carRequests: CarRequest[] = [];
-  private refreshInterval: any;
+  userName: string = '';
+  notificationCount: number = 0;
+  private notificationIntervalId: any;
 
-  constructor(private ngZone: NgZone) {}
+  constructor() {}
 
   ngOnInit() {
+    // Fetch data immediately on component initialization
     this.fetchCarRequests();
-    this.startAutoRefresh(); 
-    // this.handleClick();
+    // this.fetchUserName();
+
+    // Set up a short interval to keep fetching notification count
+    this.notificationIntervalId = setInterval(() => {
+      // this.fetchUserName();
+      this.fetchCarRequests();
+    }, 2000); // Adjust as necessary for performance
   }
 
   ngOnDestroy() {
-    this.stopAutoRefresh(); 
-  }
-
-  private startAutoRefresh() {
-    this.ngZone.runOutsideAngular(() => {
-      this.refreshInterval = setInterval(() => {
-        this.ngZone.run(() => {
-          this.fetchCarRequests();
-        });
-      }, 2000);
-    });
-  }
-
-  private stopAutoRefresh() {
-    if (this.refreshInterval) {
-      clearInterval(this.refreshInterval);
+    // Clear interval on component destruction to avoid memory leaks
+    if (this.notificationIntervalId) {
+      clearInterval(this.notificationIntervalId);
     }
   }
 
@@ -54,13 +49,24 @@ export class RequestTableUserComponent implements OnInit, OnDestroy {
     try {
       const response = await fetch('http://localhost:5221/api/Notifications');
       const data = await response.json();
-      this.ngZone.run(() => {
-        this.carRequests = [...data];
-      });
+      this.carRequests = [...data];
     } catch (error) {
       console.error('Error fetching car requests:', error);
     }
   }
+
+  // async fetchUserName() {
+  //   const id = localStorage.getItem('Id');
+  //   if (!id) return;
+
+  //   try {
+  //     const response = await fetch(`http://localhost:5221/api/Users/${id}`);
+  //     const data = await response.json();
+  //     this.userName = data.name;
+  //   } catch (error) {
+  //     console.error('Error fetching user name:', error);
+  //   }
+  // }
 
   async deleteRequest(request: CarRequest) {
     const deleteUrl = `http://localhost:5221/api/Notifications/${request.notificationID}`;
@@ -74,9 +80,7 @@ export class RequestTableUserComponent implements OnInit, OnDestroy {
       });
 
       if (response.ok) {
-        this.ngZone.run(() => {
-          this.carRequests = this.carRequests.filter(r => r.notificationID !== request.notificationID);
-        });
+        this.carRequests = this.carRequests.filter(r => r.notificationID !== request.notificationID);
       } else {
         throw new Error(`Failed to delete request: ${response.statusText}`);
       }
