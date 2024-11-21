@@ -39,7 +39,15 @@
                 <p><strong>License Plate:</strong> {{ carDetails?.carNumber}}</p>
               </div>
               <div class="col-12">
-                <p class="h3 text-center"><strong>Status:</strong> <span class="status-indicator status-green"> {{ carDetails?.status }}</span></p>
+                <p class="h3 text-center"><strong>Status:</strong> <span class="badge"
+                  [ngClass]="{
+                    'bg-success': carDetails?.status === 'parked',
+                    'bg-danger': carDetails?.status === 'unparked',
+                    'bg-info': carDetails?.status === 'in-transit'
+                  }">
+              {{ carDetails?.status }}
+            </span>
+            </p>
               </div>
             </div>
 
