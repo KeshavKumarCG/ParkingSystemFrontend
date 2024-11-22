@@ -39,13 +39,13 @@
                   <td>{{ car.carModel }}</td>
                   <td>{{ car.carNumber }}</td>
                   <td>{{ car.phoneNumber }}</td>
-
                   <td>
                     <span
                       class="badge"
                       [ngClass]="{
                         'bg-success': car.status === 'parked',
-                        'bg-danger': car.status === 'unparked'
+                        'bg-danger': car.status === 'unparked',
+                        'bg-warning': car.status === 'in-transit'
                       }"
                     >
                       {{ car.status }}
@@ -60,7 +60,7 @@
                       }"
                       (click)="toggleCarStatus(car.carID)"
                     >
-                      {{ car.status === "parked" ? "Unpark" : "Park" }}
+                      {{ car.status === 'parked' ? 'Unpark' : 'Park' }}
                     </button>
                   </td>
                 </tr>

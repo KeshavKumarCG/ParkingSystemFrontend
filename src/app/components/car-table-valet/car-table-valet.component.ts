@@ -1,5 +1,3 @@
-
-
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -10,8 +8,8 @@ interface Car {
   carModel: string;
   carNumber: string;
   phoneNumber: string;
-  status: string;
-  statusID: string;
+  status: string; // Mapped status for display
+  statusID: string; // Raw status ID from database
 }
 
 @Component({
@@ -35,16 +33,16 @@ export class CarTableValetComponent implements OnInit {
     this.http.get<Car[]>('http://localhost:5221/api/SearchFunctionality/combined')
       .subscribe({
         next: (data) => {
-          // Map the statusID to status display value
+          // Map the statusID to a user-friendly status for display
           this.cars = data.map(car => ({
             ...car,
-            status: this.getStatusFromId(car.statusID)
+            status: this.getStatusFromId(car.statusID) || 'Unknown', // Handle empty or unknown statusID
           }));
           this.filteredCars = this.cars;
         },
         error: (error) => {
           console.error('Error fetching cars:', error);
-        }
+        },
       });
   }
 
@@ -52,18 +50,18 @@ export class CarTableValetComponent implements OnInit {
     const statusMap: { [key: string]: string } = {
       'STATUS001': 'parked',
       'STATUS002': 'unparked',
-      'STATUS003': 'in-transit'
+      'STATUS003': 'in-transit',
     };
-    return statusMap[statusId] || statusId;
+    return statusMap[statusId] || 'Unknown'; // Fallback to 'Unknown' if statusID is missing or invalid
   }
 
   getIdFromStatus(status: string): string {
     const reverseMap: { [key: string]: string } = {
       'parked': 'STATUS001',
       'unparked': 'STATUS002',
-      'in-transit': 'STATUS003'
+      'in-transit': 'STATUS003',
     };
-    return reverseMap[status as keyof typeof reverseMap] || status;
+    return reverseMap[status as keyof typeof reverseMap] || 'STATUS_UNKNOWN'; // Fallback for unmapped statuses
   }
 
   onSearch() {
@@ -92,8 +90,15 @@ export class CarTableValetComponent implements OnInit {
         statusId: newStatusId
       }).subscribe({
         next: () => {
+          // Update car object locally
           car.status = newStatus;
           car.statusID = newStatusId;
+
+          // Update filteredCars to reflect changes
+          this.filteredCars = this.filteredCars.map(c =>
+            c.carID === carID ? { ...car } : c
+          );
+
           console.log('Car status updated successfully');
         },
         error: (error) => {
@@ -103,4 +108,15 @@ export class CarTableValetComponent implements OnInit {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
 
