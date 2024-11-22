@@ -1,4 +1,4 @@
- <div class="container-fluid mt-4">
+<div class="container-fluid mt-4">
   <div class="row justify-content-center">
     <div class="col-12 col-md-10 col-lg-8">
       <div class="card shadow-sm">
@@ -13,10 +13,11 @@
                 placeholder="Search by ID, Model, Number, or Phone"
                 id="carSearch"
                 [(ngModel)]="searchTerm"
-                (input)="onSearch()" />
-              <button
-                class="btn btn-outline-secondary"
-                (click)="clearSearch()">Clear</button>
+                (input)="onSearch()"
+              />
+              <button class="btn btn-outline-secondary" (click)="clearSearch()">
+                Clear
+              </button>
             </div>
           </div>
 
@@ -38,17 +39,28 @@
                   <td>{{ car.carModel }}</td>
                   <td>{{ car.carNumber }}</td>
                   <td>{{ car.phoneNumber }}</td>
+
                   <td>
-                    <span class="badge"
-                          [ngClass]="{'bg-success': car.status === 'parked', 'bg-danger': car.status === 'unparked'}">
+                    <span
+                      class="badge"
+                      [ngClass]="{
+                        'bg-success': car.status === 'parked',
+                        'bg-danger': car.status === 'unparked'
+                      }"
+                    >
                       {{ car.status }}
                     </span>
                   </td>
                   <td>
-                    <button class="btn btn-sm"
-                            [ngClass]="{'btn-outline-primary': car.status === 'unparked', 'btn-outline-warning': car.status === 'parked'}"
-                            (click)="toggleCarStatus(car.carID)">
-                      {{ car.status === 'parked' ? 'Unpark' : 'Park' }}
+                    <button
+                      class="btn btn-sm"
+                      [ngClass]="{
+                        'btn-outline-primary': car.status === 'unparked',
+                        'btn-outline-warning': car.status === 'parked'
+                      }"
+                      (click)="toggleCarStatus(car.carID)"
+                    >
+                      {{ car.status === "parked" ? "Unpark" : "Park" }}
                     </button>
                   </td>
                 </tr>
@@ -56,7 +68,10 @@
             </table>
           </div>
 
-          <div *ngIf="filteredCars.length === 0" class="alert alert-info mt-3 text-center">
+          <div
+            *ngIf="filteredCars.length === 0"
+            class="alert alert-info mt-3 text-center"
+          >
             No cars found matching your search criteria.
           </div>
         </div>
@@ -64,4 +79,3 @@
     </div>
   </div>
 </div>
-
