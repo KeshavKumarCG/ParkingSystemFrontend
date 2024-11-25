@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -41,24 +40,37 @@ export class RequestTableUserComponent implements OnInit {
   }
 
   deleteRequest(request: CarRequest) {
-    // First update the car status to unparked
-    this.http.patch('http://localhost:5221/api/cars', {
-      carNumber: request.carNumber,
-      statusId: 'STATUS002' // Status code for unparked
-    }).subscribe({
-      next: () => {
-        console.log(`Car status updated to unparked for car number: ${request.carNumber}`);
-        // Then delete the notification
-        this.deleteNotification(request);
-      },
-      error: (error) => {
-        console.error('Error updating car status:', error);
-      }
-    });
+    console.log('deleteRequest called for car number:', request.carNumber);
+    console.log('Attempting to update car status for:', request.carNumber);
+    
+    // Make sure we're sending the correct payload
+    const updatePayload = {
+      carNumber: request.carNumber,  
+      statusId: 'STATUS002'  // Status code for unparked
+    };
+
+    // Update the car status to 'unparked' using the new API
+    this.http.patch('http://localhost:5221/api/Cars/update-by-car-number', updatePayload)
+      .subscribe({
+        next: (response) => {
+          console.log('Car status update response:', response);
+          console.log(`Car status updated to unparked for car number: ${request.carNumber}`);
+          
+          // Proceed to delete the notification after the status update
+          this.deleteNotification(request);
+        },
+        error: (error) => {
+          console.error('Error in patch request (status update):', error);
+        }
+      });
+
+    console.log('deleteRequest is exiting (if you see this log, the request has not completed yet)');
   }
 
   private deleteNotification(request: CarRequest) {
+    console.log('deleteNotification called for notification ID:', request.notificationID);
     const deleteUrl = `http://localhost:5221/api/Notifications/${request.notificationID}`;
+
     this.http.delete(deleteUrl).subscribe({
       next: () => {
         console.log(`Successfully deleted request with ID: ${request.notificationID}`);
