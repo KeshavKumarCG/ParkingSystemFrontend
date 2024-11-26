@@ -23,15 +23,15 @@ export class AdminPanelComponent implements OnInit {
     { id: 6, name: 'Neha Desai', phoneNumber: '989-765-4321', email: 'neha.desai@example.com', role: 'User', carModel: 'Ford EcoSport', carNumber: 'MH 15 AK 8901' },
   ];
   filteredUsers: any[] = [];
-  newUser: any = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
-  selectedUser: any = null;
+  currentUser: any = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
+  isEditMode: boolean = false;
 
   ngOnInit(): void {
     this.filteredUsers = this.users;
   }
 
   filterUsers() {
-    this.filteredUsers = this.users.filter(user => 
+    this.filteredUsers = this.users.filter(user =>
       user.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
       user.carNumber.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
       user.phoneNumber.includes(this.searchQuery) ||
@@ -41,31 +41,31 @@ export class AdminPanelComponent implements OnInit {
   }
 
   openCreateUserModal() {
-    this.newUser = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
-    this.selectedUser = null;
-    const createUserModal = new bootstrap.Modal(document.getElementById('createUserModal'));
-    createUserModal.show();
+    this.isEditMode = false;
+    this.currentUser = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
+    const modal = new bootstrap.Modal(document.getElementById('createUserModal'));
+    modal.show();
   }
 
   openEditUserModal(user: any) {
-    this.selectedUser = { ...user }; 
-    const editUserModal = new bootstrap.Modal(document.getElementById('createUserModal'));
-    editUserModal.show();
+    this.isEditMode = true;
+    this.currentUser = { ...user };
+    const modal = new bootstrap.Modal(document.getElementById('createUserModal'));
+    modal.show();
   }
 
-  addUser() {
-    if (this.selectedUser) {
-      const index = this.users.findIndex(u => u.id === this.selectedUser.id);
+  saveUser() {
+    if (this.isEditMode) {
+      const index = this.users.findIndex(u => u.id === this.currentUser.id);
       if (index !== -1) {
-        this.users[index] = { ...this.selectedUser }; 
-      this.selectedUser = null; 
-      } else {
-        this.users.push({ ...this.newUser, id: this.users.length + 1 });
+        this.users[index] = { ...this.currentUser };
       }
-      this.filteredUsers = this.users; 
-      this.newUser = { name: '', phoneNumber: '', email: '', role: 'User', carModel: '', carNumber: '' };
-      bootstrap.Modal.getInstance(document.getElementById('createUserModal')).hide();
+    } else {
+      this.currentUser.id = this.users.length + 1;
+      this.users.push({ ...this.currentUser });
     }
+    this.filteredUsers = [...this.users];
+    bootstrap.Modal.getInstance(document.getElementById('createUserModal')).hide();
   }
 
   deleteUser(user: any) {

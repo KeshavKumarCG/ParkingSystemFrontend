@@ -132,5 +132,6 @@ export class UserHomePageComponent implements OnInit {
         } catch (error) {
             console.error('Error in notification process:', error);
         }
-    }   
+    }
+  }
 }
