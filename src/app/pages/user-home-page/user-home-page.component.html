@@ -10,7 +10,7 @@
         </div>
 
         <div class="card-body">
-          <h5 class="text-center mb-4">Owner Details</h5>
+          <h5 class="text-center mb-4">Your Details</h5>
           <div *ngIf="userDetails">
             <div class="row">
               <!-- First row with 2 columns -->
@@ -32,7 +32,7 @@
 
             <hr>
 
-            <h5 class="text-center mb-4">Valet Details</h5> <!-- Valet Section -->
+            <h5 class="text-center mb-4">Valet Details</h5>
             <div *ngIf="valetDetails" class="row">
               <div class="col-12 col-md-6">
                 <p><strong>Valet Name:</strong> {{ valetDetails?.name }}</p>
@@ -59,14 +59,13 @@
               <div class="col-12">
                 <p class="h3 text-center">
                   <strong>Car Status: </strong>
-                  
-                  <span class="badge text-white"
+                  <span 
                     [ngClass]="{
                       'text-success': carDetails?.status === 'parked',
                       'text-danger': carDetails?.status === 'unparked',
                       'text-info': carDetails?.status === 'in-transit'
                     }">
-                    {{ carDetails?.status }}
+                    <strong> {{ carDetails?.status | titlecase }}</strong>
                   </span>
                 </p>
               </div>
