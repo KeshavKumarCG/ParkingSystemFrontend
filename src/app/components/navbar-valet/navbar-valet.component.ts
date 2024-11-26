@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserDetailsService } from '../../Services/user.details.service';
+import { UserDetailsService } from '../../Services/user-details/user.details.service';
 
 @Component({
   selector: 'app-navbar-valet',

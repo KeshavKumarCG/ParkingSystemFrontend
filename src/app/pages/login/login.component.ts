@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../Services/auth.service';
+import { AuthService } from '../../Services/authentication/auth.service';
 import { Router } from '@angular/router';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
