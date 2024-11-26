@@ -1,15 +1,14 @@
+
 import { Component } from '@angular/core';
-import { NavbarComponent as NavbarComponent1} from '../../components/navbar-valet/navbar-valet.component';
+import { NavbarComponent as NavbarValetComponent } from '../../components/navbar-valet/navbar-valet.component';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
-import { RequestTableUserComponent } from "../../components/request-table-user/request-table-user.component.spec";
+import { RequestTableUserComponent } from "../../components/request-table-user/request-table-user.component";
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss'],
-  imports: [NavbarComponent, RequestTableUserComponent , NavbarComponent1]
+  imports: [NavbarComponent, RequestTableUserComponent, NavbarValetComponent]
 })
-export class NotificationsComponent {
-
-}
+export class NotificationsComponent {}
