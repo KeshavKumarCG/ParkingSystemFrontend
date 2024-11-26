@@ -9,8 +9,7 @@ interface Car {
   carModel: string;
   carNumber: string;
   phoneNumber: string;
-  status: string; // Mapped status for display
-  statusID: string; // Raw status ID from database
+  status: string; 
 }
 
 @Component({
@@ -34,10 +33,10 @@ export class CarTableValetComponent implements OnInit {
     this.http.get<Car[]>('http://localhost:5221/api/SearchFunctionality/combined')
       .subscribe({
         next: (data) => {
-          // Map the statusID to a user-friendly status for display
+          // Directly assign the status from the API response
           this.cars = data.map(car => ({
             ...car,
-            status: this.getStatusFromId(car.statusID) || 'Unknown', // Handle empty or unknown statusID
+            status: this.getStatusFromId(car.status), // Map status to a user-friendly name
           }));
           this.filteredCars = this.cars;
         },
@@ -47,13 +46,13 @@ export class CarTableValetComponent implements OnInit {
       });
   }
 
-  getStatusFromId(statusId: string): string {
+  getStatusFromId(status: string): string {
     const statusMap: { [key: string]: string } = {
       'STATUS001': 'parked',
       'STATUS002': 'unparked',
       'STATUS003': 'in-transit',
     };
-    return statusMap[statusId] || 'Unknown'; // Fallback to 'Unknown' if statusID is missing or invalid
+    return statusMap[status] || 'Unknown'; // Fallback to 'Unknown' if status is missing or invalid
   }
 
   getIdFromStatus(status: string): string {
@@ -97,7 +96,6 @@ export class CarTableValetComponent implements OnInit {
         next: () => {
           // Update car object locally
           car.status = newStatus;
-          car.statusID = newStatusId;
 
           // Update filteredCars to reflect changes
           this.filteredCars = this.filteredCars.map(c =>
