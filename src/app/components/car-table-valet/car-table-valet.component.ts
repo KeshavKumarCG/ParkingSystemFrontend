@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -84,10 +85,14 @@ export class CarTableValetComponent implements OnInit {
       const newStatus = car.status === 'parked' ? 'unparked' : 'parked';
       const newStatusId = this.getIdFromStatus(newStatus);
 
-      this.http.patch('http://localhost:5221/api/cars', {
-        id: carID,
-        statusId: newStatusId
-      }).subscribe({
+      // Send the PATCH request to update the car status based on either CarID or CarNumber
+      const requestBody = {
+        statusId: newStatusId,
+        carID: carID,  // Use carID here as per the backend logic
+        carNumber: car.carNumber  // Add carNumber in case we want to update using it
+      };
+
+      this.http.patch('http://localhost:5221/api/cars', requestBody).subscribe({
         next: () => {
           // Update car object locally
           car.status = newStatus;
