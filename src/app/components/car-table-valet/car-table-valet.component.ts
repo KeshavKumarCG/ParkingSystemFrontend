@@ -8,7 +8,8 @@ interface Car {
   carModel: string;
   carNumber: string;
   phoneNumber: string;
-  status: string;
+  status: string; // Mapped status for display
+  statusID: string; // Raw status ID from database
 }
 
 @Component({
@@ -30,15 +31,37 @@ export class CarTableValetComponent implements OnInit {
 
   fetchCars() {
     this.http.get<Car[]>('http://localhost:5221/api/SearchFunctionality/combined')
-      .subscribe(
-        (data) => {
-          this.cars = data;
-          this.filteredCars = data;
+      .subscribe({
+        next: (data) => {
+          // Map the statusID to a user-friendly status for display
+          this.cars = data.map(car => ({
+            ...car,
+            status: this.getStatusFromId(car.statusID) || 'Unknown', // Handle empty or unknown statusID
+          }));
+          this.filteredCars = this.cars;
         },
-        (error) => {
+        error: (error) => {
           console.error('Error fetching cars:', error);
-        }
-      );
+        },
+      });
+  }
+
+  getStatusFromId(statusId: string): string {
+    const statusMap: { [key: string]: string } = {
+      'STATUS001': 'parked',
+      'STATUS002': 'unparked',
+      'STATUS003': 'in-transit',
+    };
+    return statusMap[statusId] || 'Unknown'; // Fallback to 'Unknown' if statusID is missing or invalid
+  }
+
+  getIdFromStatus(status: string): string {
+    const reverseMap: { [key: string]: string } = {
+      'parked': 'STATUS001',
+      'unparked': 'STATUS002',
+      'in-transit': 'STATUS003',
+    };
+    return reverseMap[status as keyof typeof reverseMap] || 'STATUS_UNKNOWN'; // Fallback for unmapped statuses
   }
 
   onSearch() {
@@ -52,27 +75,48 @@ export class CarTableValetComponent implements OnInit {
   }
 
   clearSearch() {
-    this.searchTerm = '';  
-    this.filteredCars = this.cars; 
+    this.searchTerm = '';
+    this.filteredCars = this.cars;
   }
 
   toggleCarStatus(carID: string) {
     const car = this.cars.find(c => c.carID === carID);
     if (car) {
-      car.status = car.status === 'parked' ? 'unparked' : 'parked';
-      this.updateCarStatus(car);
-    }
-  }
+      const newStatus = car.status === 'parked' ? 'unparked' : 'parked';
+      const newStatusId = this.getIdFromStatus(newStatus);
 
-  updateCarStatus(car: Car) {
-    this.http.put(`http://localhost:5221/api/SearchFunctionality/updateStatus/${car.carID}`, { status: car.status })
-      .subscribe(
-        () => {
+      this.http.patch('http://localhost:5221/api/cars', {
+        id: carID,
+        statusId: newStatusId
+      }).subscribe({
+        next: () => {
+          // Update car object locally
+          car.status = newStatus;
+          car.statusID = newStatusId;
+
+          // Update filteredCars to reflect changes
+          this.filteredCars = this.filteredCars.map(c =>
+            c.carID === carID ? { ...car } : c
+          );
+
           console.log('Car status updated successfully');
         },
-        (error) => {
+        error: (error) => {
           console.error('Error updating car status:', error);
         }
-      );
+      });
+    }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+

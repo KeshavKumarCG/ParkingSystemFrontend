@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 interface Car {
   id: string;
-  name: string;
+  carModel: string;
   licensePlate: string;
-  userPhone: string;
+  userPhoneNumber: string;
   status: 'Parked' | 'Unparked';
 }
 
@@ -24,7 +24,7 @@ export class CarSearchValetComponent {
   onSearch() {
     this.cars = this.cars.filter(car =>
       car.id.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      car.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      car.carModel.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       car.licensePlate.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
