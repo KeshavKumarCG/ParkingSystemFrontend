@@ -14,6 +14,7 @@ interface Car {
 @Component({
   selector: 'app-car-table-valet',
   templateUrl: './car-table-valet.component.html',
+  styleUrls: ['./car-table-valet.component.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule],
 })
