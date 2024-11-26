@@ -92,6 +92,7 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
   private startStatusRefresh(userId: string) {
     this.statusInterval = setInterval(async () => {
       try {
+        
         const data: CarDetails[] = await this.carDetailsService.getCarDetailsByUserId(userId);
         if (data.length > 0) {
           this.carDetails = data[0];
