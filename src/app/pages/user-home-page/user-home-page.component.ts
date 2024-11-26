@@ -146,9 +146,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { UserDetailsService } from '../../Services/user.details.service';
-import { CarDetailsService } from '../../Services/cardetails.service';
-import { ValetService } from '../../Services/valet.service';
+import { UserDetailsService } from '../../Services/user-details/user.details.service';
+import { CarDetailsService } from '../../Services/car-details/cardetails.service';
+import { ValetService } from '../../Services/valet-details/valet.service';
 
 interface UserDetails {
   id: number;
