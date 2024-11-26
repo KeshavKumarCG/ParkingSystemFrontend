@@ -5,7 +5,6 @@
     <div class="col-md-12">
       <div class="card mt-5 shadow-sm">
 
-
         <div class="card-header bg-dark text-center text-white">
           <h3>Vehicle Parking Status</h3>
         </div>
@@ -14,17 +13,35 @@
           <h5 class="text-center mb-4">Owner Details</h5>
           <div *ngIf="userDetails">
             <div class="row">
-              <div class="col-12">
+              <!-- First row with 2 columns -->
+              <div class="col-12 col-md-6">
                 <p><strong>Name:</strong> {{ userDetails.name }}</p>
               </div>
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <p><strong>CYG ID:</strong> {{ userDetails.cygid }}</p>
               </div>
-              <div class="col-12">
+
+              <!-- Second row with 2 columns -->
+              <div class="col-12 col-md-6">
                 <p><strong>Phone:</strong> {{ userDetails.phoneNumber }}</p>
               </div>
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <p><strong>Email:</strong> {{ userDetails.email }}</p>
+              </div>
+            </div>
+
+            <hr>
+
+            <h5 class="text-center mb-4">Valet Details</h5> <!-- Valet Section -->
+            <div *ngIf="valetDetails" class="row">
+              <div class="col-12 col-md-6">
+                <p><strong>Valet Name:</strong> {{ valetDetails?.name }}</p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p><strong>Phone:</strong> {{ valetDetails?.phoneNumber }}</p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p><strong>Email:</strong> {{ valetDetails?.email }}</p>
               </div>
             </div>
 
@@ -32,23 +49,12 @@
 
             <h5 class="text-center mb-4">Vehicle Details</h5>
             <div class="row">
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <p><strong>Car Model:</strong> {{ carDetails?.carModel }}</p>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <p><strong>License Plate:</strong> {{ carDetails?.carNumber}}</p>
               </div>
-              <!-- <div class="col-12">
-                <p class="h3 text-center"><strong>Status:</strong> <span class="badge"
-                  [ngClass]="{
-                    'bg-success': carDetails?.status === 'parked',
-                    'bg-danger': carDetails?.status === 'unparked',
-                    'bg-info': carDetails?.status === 'in-transit'
-                  }">
-              {{ carDetails?.status }}
-            </span>
-            </p>
-              </div> -->
 
               <div class="col-12">
                 <p class="h3 text-center">
@@ -63,7 +69,6 @@
                   </span>
                 </p>
               </div>
-
             </div>
 
             <hr>

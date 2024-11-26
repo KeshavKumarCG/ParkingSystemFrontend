@@ -148,6 +148,7 @@ import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { UserDetailsService } from '../../Services/user.details.service';
 import { CarDetailsService } from '../../Services/cardetails.service';
+import { ValetService } from '../../Services/valet.service';
 
 interface UserDetails {
   id: number;
@@ -163,23 +164,31 @@ interface CarDetails {
   status: string;
 }
 
+interface ValetDetails {
+  name: string;
+  phoneNumber: string;
+  email: string;
+}
+
 @Component({
   selector: 'app-user-home-page',
   standalone: true,
   imports: [CommonModule, RouterModule, NavbarComponent],
   templateUrl: './user-home-page.component.html',
   styleUrls: ['./user-home-page.component.css'],
-  providers: [UserDetailsService, CarDetailsService]
+  providers: [UserDetailsService, CarDetailsService, ValetService]
 })
 export class UserHomePageComponent implements OnInit, OnDestroy {
   showModal = false;
   userDetails: UserDetails | null = null;
   carDetails: CarDetails | null = null;
+  valetDetails: ValetDetails | null = null;  // Added valetDetails field
   private statusInterval: any;
 
   constructor(
     private userDetailsService: UserDetailsService,
-    private carDetailsService: CarDetailsService
+    private carDetailsService: CarDetailsService,
+    private valetService: ValetService // Injected ValetService
   ) {}
 
   async ngOnInit() {
@@ -200,12 +209,23 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
     }
   }
 
+  async fetchValetDetails() {
+    const valetId = 2; // Replace with dynamic logic if needed
+    try {
+      this.valetDetails = await this.valetService.getValetDetails(valetId).toPromise();
+      console.log('Valet details fetched:', this.valetDetails);
+    } catch (error) {
+      console.error('Error retrieving valet details:', error);
+    }
+  }
+
   private async initializeUserAndCarDetails(userId: string) {
     try {
       this.userDetails = await this.userDetailsService.getUserDetailsById(userId);
       if (this.userDetails) {
         localStorage.setItem('name', this.userDetails.name);
         await this.fetchCarDetails(userId);
+        await this.fetchValetDetails(); // Added to fetch valet details
       }
       console.log('User details initialized:', this.userDetails);
     } catch (error) {
