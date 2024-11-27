@@ -33,10 +33,9 @@ export class CarTableValetComponent implements OnInit {
     this.http.get<Car[]>('http://localhost:5221/api/SearchFunctionality/combined')
       .subscribe({
         next: (data) => {
-          // Directly assign the status from the API response
           this.cars = data.map(car => ({
             ...car,
-            status: this.getStatusFromId(car.status), // Map status to a user-friendly name
+            status: this.getStatusFromId(car.status),
           }));
           this.filteredCars = this.cars;
         },
@@ -52,7 +51,7 @@ export class CarTableValetComponent implements OnInit {
       'STATUS002': 'unparked',
       'STATUS003': 'in-transit',
     };
-    return statusMap[status] || 'Unknown'; // Fallback to 'Unknown' if status is missing or invalid
+    return statusMap[status] || 'Unknown'; 
   }
 
   getIdFromStatus(status: string): string {
@@ -61,7 +60,7 @@ export class CarTableValetComponent implements OnInit {
       'unparked': 'STATUS002',
       'in-transit': 'STATUS003',
     };
-    return reverseMap[status as keyof typeof reverseMap] || 'STATUS_UNKNOWN'; // Fallback for unmapped statuses
+    return reverseMap[status as keyof typeof reverseMap] || 'STATUS_UNKNOWN';
   }
 
   onSearch() {
@@ -85,19 +84,18 @@ export class CarTableValetComponent implements OnInit {
       const newStatus = car.status === 'parked' ? 'unparked' : 'parked';
       const newStatusId = this.getIdFromStatus(newStatus);
 
-      this.http.patch('http://localhost:5221/api/cars', {
-        id: carID,
-        statusId: newStatusId
-      }).subscribe({
-        next: () => {
-          // Update car object locally
-          car.status = newStatus;
+      const requestBody = {
+        statusId: newStatusId,
+        carID: carID,
+        carNumber: car.carNumber
+      };
 
-          // Update filteredCars to reflect changes
+      this.http.patch('http://localhost:5221/api/cars', requestBody).subscribe({
+        next: () => {
+          car.status = newStatus;
           this.filteredCars = this.filteredCars.map(c =>
             c.carID === carID ? { ...car } : c
           );
-
           console.log('Car status updated successfully');
         },
         error: (error) => {

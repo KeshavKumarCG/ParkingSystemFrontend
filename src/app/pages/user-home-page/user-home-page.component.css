@@ -67,13 +67,6 @@
   font-weight: 600;
   color: rgb(0, 44, 63) ;
 }
-/* .btn-success:active{
-  background-color:  #00da33 !important;
-  color: rgb(0, 44, 63) ;
-}
-.btn-success a:hover{
-  text-decoration: none;
-} */
 .btn-success:hover{
   background-color:  #7ede8f !important;
   color: rgb(0, 44, 63) ;
