@@ -44,7 +44,7 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
   constructor(
     private userDetailsService: UserDetailsService,
     private carDetailsService: CarDetailsService,
-    private valetService: ValetService // Injected ValetService
+    private valetService: ValetService 
   ) {}
 
   async ngOnInit() {
@@ -66,7 +66,7 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
   }
 
   async fetchValetDetails() {
-    const valetId = 2; // Replace with dynamic logic if needed
+    const valetId = 2;
     try {
       this.valetDetails = await this.valetService.getValetDetails(valetId).toPromise();
       console.log('Valet details fetched:', this.valetDetails);
@@ -92,7 +92,6 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
   private startStatusRefresh(userId: string) {
     this.statusInterval = setInterval(async () => {
       try {
-        
         const data: CarDetails[] = await this.carDetailsService.getCarDetailsByUserId(userId);
         if (data.length > 0) {
           this.carDetails = data[0];
