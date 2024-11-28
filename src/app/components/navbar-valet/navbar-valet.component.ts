@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserDetailsService } from '../../Services/user-details/user.details.service';
+import { environment } from '../../environment/environment';
 
 @Component({
   selector: 'app-navbar-valet',
@@ -58,7 +59,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   async fetchNotificationCount() {
     try {
-      const response = await fetch('http://localhost:5221/valet/notifications/count');
+      const response = await fetch(`${environment.apiUrl}valet/notifications/count`);
       const data = await response.json();
       this.notificationCount = data.count > 0 ? data.count : 0;
     } catch (error) {
