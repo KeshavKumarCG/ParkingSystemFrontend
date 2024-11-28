@@ -1,7 +1,6 @@
 
 import { Component } from '@angular/core';
 import { NavbarComponent as NavbarValetComponent } from '../../components/navbar-valet/navbar-valet.component';
-import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { RequestTableUserComponent } from "../../components/request-table-user/request-table-user.component";
 
 @Component({
@@ -9,6 +8,6 @@ import { RequestTableUserComponent } from "../../components/request-table-user/r
   standalone: true,
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss'],
-  imports: [NavbarComponent, RequestTableUserComponent, NavbarValetComponent]
+  imports: [RequestTableUserComponent, NavbarValetComponent]
 })
 export class NotificationsComponent {}

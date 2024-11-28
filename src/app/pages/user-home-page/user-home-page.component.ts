@@ -39,7 +39,7 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
   showModal = false;
   userDetails: UserDetails | null = null;
   carDetails: CarDetails | null = null;
-  valetDetails: ValetDetails | null = null;  // Added valetDetails field
+  valetDetails: ValetDetails | null = null; 
   private statusInterval: any;
 
   constructor(

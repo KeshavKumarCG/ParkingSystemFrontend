@@ -41,7 +41,7 @@ export class RequestTableUserComponent implements OnInit {
 
 
   acceptRequest(request: CarRequest) {
-    const acceptUrl = `http://localhost:5221/api/Notifications/accept/${request.notificationID}`;
+    const acceptUrl = `${environment.apiUrl}Notifications/accept/${request.notificationID}`;
   
     // Perform POST request to send the email
     this.http.post(acceptUrl, {}).subscribe({
