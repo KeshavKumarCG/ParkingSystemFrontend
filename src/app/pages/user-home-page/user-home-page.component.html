@@ -72,8 +72,12 @@
 
             <hr [ngClass]="{ 'd-none': carDetails?.status === 'unparked' }">
 
-            <div class="text-center">
-              <button type="button" [ngClass]="{ 'd-none': carDetails?.status === 'unparked' }" class="btn btn-warning btn-lg btn-block" (click)="handleClick()">Request Your Car</button>
+            <div class="text-center" *ngIf="carDetails?.status === 'parked'">
+              <button type="button" class="btn btn-warning btn-lg btn-block" (click)="handleClick()">Request Your Car</button>
+            </div>
+ 
+            <div class="text-center" *ngIf="carDetails?.status === 'in-transit'">
+                <button type="button" class="btn btn-secondary btn-lg btn-block" disabled>Preparing your car for pickup . . .</button>
             </div>
           </div>
 
