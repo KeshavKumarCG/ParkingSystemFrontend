@@ -38,6 +38,30 @@ export class RequestTableUserComponent implements OnInit {
     });
   }
 
+
+  acceptRequest(request: CarRequest) {
+    console.log('Car request updated and updated car status is In-Transit:', request);
+
+    // Only send carNumber (carID will be empty)
+    this.updateCarStatus(request)
+      .then(() => {
+        console.log('Successfully updated car status for car number:', request.carNumber);
+
+        // Hide the accept button and show the done button
+        const acceptButton = document.querySelector(`.accept-button`);
+        const doneButton = document.querySelector(`.done-button`);
+
+        if (acceptButton && doneButton) {
+          acceptButton.classList.add('d-none');
+          doneButton.classList.remove('d-none');
+        }
+      })
+      .catch((error) => {
+        console.error('Error updating car status:', error);
+      });
+  }
+
+
   deleteRequest(request: CarRequest) {
     console.log('Preparing to update car status for request:', request);
 
@@ -102,3 +126,4 @@ export class RequestTableUserComponent implements OnInit {
     });
   }
 }
+

@@ -28,10 +28,16 @@
                   <td>{{ request.notificationTime | date: 'dd-MM-yyyy, hh:mm a' }}</td>
                   <td>
                     <button
-                      class="btn btn-sm w-100 btn-success"
+                      class=" btn btn-sm w-100 btn-success accept-button"
+                      (click)="acceptRequest(request)"
+                    >
+                      Accept
+                    </button>
+                    <button
+                      class="btn btn-sm w-100 btn-success done-button d-none"
                       (click)="deleteRequest(request)"
                     >
-                      Accept/Done
+                      Done
                     </button>
                   </td>
                 </tr>
