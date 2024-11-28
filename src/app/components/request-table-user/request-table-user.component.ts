@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environment/environment';
 
 interface CarRequest {
   notificationID: number;
@@ -28,7 +29,7 @@ export class RequestTableUserComponent implements OnInit {
   }
 
   fetchCarRequests() {
-    this.http.get<CarRequest[]>('http://localhost:5221/api/Notifications').subscribe({
+    this.http.get<CarRequest[]>(`${environment.apiUrl}Notifications`).subscribe({
       next: (data) => {
         this.carRequests = data;
       },
@@ -114,10 +115,10 @@ export class RequestTableUserComponent implements OnInit {
     console.log('Sending payload to update car status:', payload);
 
     return new Promise((resolve, reject) => {
-      this.http.patch('http://localhost:5221/api/cars', payload).subscribe({
+      this.http.patch(`${environment.apiUrl}cars`, payload).subscribe({
         next: () => {
           console.log(`Car status updated successfully`);
-          resolve(); // Resolve on success
+          resolve(); 
         },
         error: (error) => {
           console.error('Error updating car status:', error);
@@ -153,11 +154,11 @@ export class RequestTableUserComponent implements OnInit {
   }
 
   private createPayload(request: CarRequest): any {
-    // Only send carNumber in the payload, carID will be empty
+   
     if (request.carNumber) {
       return { carID: "", statusID: "STATUS002", carNumber: request.carNumber };
     }
-    return null; // Reject if carNumber is not available
+    return null; 
   }
 
   private createPayloadAccepted(request: CarRequest): any {
@@ -169,9 +170,8 @@ export class RequestTableUserComponent implements OnInit {
   }
 
   private deleteNotification(request: CarRequest) {
-    const deleteUrl = `http://localhost:5221/api/Notifications/${request.notificationID}`;
+    const deleteUrl = `${environment.apiUrl}Notifications/${request.notificationID}`;
 
-    // Perform DELETE request to remove the notification
     this.http.delete(deleteUrl).subscribe({
       next: () => {
         console.log(`Successfully deleted request with ID: ${request.notificationID}`);

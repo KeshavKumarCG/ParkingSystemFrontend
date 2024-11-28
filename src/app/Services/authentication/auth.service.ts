@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
+import { environment } from '../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5221/api/Auth/login';
+  private apiUrl = `${environment.apiUrl}Auth/login`;;
 
   login(credentials: { emailOrPhone: string; password: string }): Observable<any> {
     return from(

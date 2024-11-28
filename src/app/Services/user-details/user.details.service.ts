@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserDetailsService {
-  private baseUrl = 'http://localhost:5221/api/Users/';
+  private baseUrl =  `${environment.apiUrl}Users/`;
 
   async getUserDetailsById(id: string | null): Promise<UserDetails> {
     if (!id) {

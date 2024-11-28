@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../environment/environment';
 
 interface Car {
   carID: string;
@@ -30,7 +31,7 @@ export class CarTableValetComponent implements OnInit {
   }
 
   fetchCars() {
-    this.http.get<Car[]>('http://localhost:5221/api/SearchFunctionality/combined')
+    this.http.get<Car[]>(`${environment.apiUrl}SearchFunctionality/combined`)
       .subscribe({
         next: (data) => {
           this.cars = data.map(car => ({
@@ -90,7 +91,7 @@ export class CarTableValetComponent implements OnInit {
         carNumber: car.carNumber
       };
 
-      this.http.patch('http://localhost:5221/api/cars', requestBody).subscribe({
+      this.http.patch(`${environment.apiUrl}cars`, requestBody).subscribe({
         next: () => {
           car.status = newStatus;
           this.filteredCars = this.filteredCars.map(c =>

@@ -5,6 +5,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { UserDetailsService } from '../../Services/user-details/user.details.service';
 import { CarDetailsService } from '../../Services/car-details/cardetails.service';
 import { ValetService } from '../../Services/valet-details/valet.service';
+import { environment } from '../../environment/environment';
 
 interface UserDetails {
   id: number;
@@ -44,7 +45,7 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
   constructor(
     private userDetailsService: UserDetailsService,
     private carDetailsService: CarDetailsService,
-    private valetService: ValetService // Injected ValetService
+    private valetService: ValetService 
   ) {}
 
   async ngOnInit() {
@@ -66,7 +67,7 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
   }
 
   async fetchValetDetails() {
-    const valetId = 2; // Replace with dynamic logic if needed
+    const valetId = 2; 
     try {
       this.valetDetails = await this.valetService.getValetDetails(valetId).toPromise();
       console.log('Valet details fetched:', this.valetDetails);
@@ -81,7 +82,7 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
       if (this.userDetails) {
         localStorage.setItem('name', this.userDetails.name);
         await this.fetchCarDetails(userId);
-        await this.fetchValetDetails(); // Added to fetch valet details
+        await this.fetchValetDetails(); 
       }
       console.log('User details initialized:', this.userDetails);
     } catch (error) {
@@ -143,14 +144,14 @@ export class UserHomePageComponent implements OnInit, OnDestroy {
 
       try {
         const [smsResponse, tableResponse] = await Promise.all([
-          fetch('http://localhost:5221/api/VehicleStatus/notify-valet', {
+          fetch(`${environment.apiUrl}VehicleStatus/notify-valet`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(smsNotificationData)
           }),
-          fetch('http://localhost:5221/valet/notifications', {
+          fetch(`${environment.apiUrl}valet/notifications`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
