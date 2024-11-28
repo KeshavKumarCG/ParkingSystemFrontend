@@ -40,14 +40,35 @@ export class RequestTableUserComponent implements OnInit {
 
 
   acceptRequest(request: CarRequest) {
-    console.log('Car request updated and updated car status is In-Transit:', request);
+    const acceptUrl = `http://localhost:5221/api/Notifications/accept/${request.notificationID}`;
+  
+    // Perform POST request to send the email
+    this.http.post(acceptUrl, {}).subscribe({
+      next: () => {
+      console.log(`Successfully sent email for request with ID: ${request.notificationID}`);
+      this.carRequests = this.carRequests.filter((r) => r.notificationID !== request.notificationID);
+      const acceptButton = document.querySelector(`.accept-button`);
+        const doneButton = document.querySelector(`.done-button`);
 
+        if (acceptButton && doneButton) {
+          acceptButton.classList.add('d-none');
+          doneButton.classList.remove('d-none');
+        }
+
+      },
+      error: (error) => {
+      // console.error(`Error sending email for request with ID: ${request.notificationID}`, error);
+      },
+    }
+  );
+  
+    console.log('Car request updated and updated car status is In-Transit:', request);
+  
     // Only send carNumber (carID will be empty)
     this.updateCarStatusAccepted(request)
+    
       .then(() => {
         console.log('Successfully updated car status for car number:', request.carNumber);
-
-        // Hide the accept button and show the done button
         const acceptButton = document.querySelector(`.accept-button`);
         const doneButton = document.querySelector(`.done-button`);
 
@@ -55,11 +76,13 @@ export class RequestTableUserComponent implements OnInit {
           acceptButton.classList.add('d-none');
           doneButton.classList.remove('d-none');
         }
+
       })
       .catch((error) => {
         console.error('Error updating car status:', error);
       });
   }
+  
 
 
   deleteRequest(request: CarRequest) {
