@@ -63,7 +63,8 @@
                       class="btn btn-sm w-100"
                       [ngClass]="{
                         'btn-success': car.status === 'unparked',
-                        'btn-dark': car.status === 'parked'
+                         'btn-dark': car.status === 'parked',
+                        'btn-warning': car.status === 'in-transit'  
                       }"
                       (click)="toggleCarStatus(car.carID)"
                     >
