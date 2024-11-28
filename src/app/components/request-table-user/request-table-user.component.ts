@@ -43,7 +43,7 @@ export class RequestTableUserComponent implements OnInit {
     console.log('Car request updated and updated car status is In-Transit:', request);
 
     // Only send carNumber (carID will be empty)
-    this.updateCarStatus(request)
+    this.updateCarStatusAccepted(request)
       .then(() => {
         console.log('Successfully updated car status for car number:', request.carNumber);
 
@@ -63,6 +63,7 @@ export class RequestTableUserComponent implements OnInit {
 
 
   deleteRequest(request: CarRequest) {
+
     console.log('Preparing to update car status for request:', request);
 
     // Only send carNumber (carID will be empty)
@@ -103,10 +104,43 @@ export class RequestTableUserComponent implements OnInit {
     });
   }
 
+  private updateCarStatusAccepted(request: CarRequest): Promise<void> {
+    // Prepare the payload with only carNumber or an empty carID
+    const payload = this.createPayloadAccepted(request);
+
+    if (!payload) {
+      console.error('No valid identifier found for car status update');
+      return Promise.reject('No valid identifier found for car status update');
+    }
+
+    console.log('Sending payload to update car status:', payload);
+
+    return new Promise((resolve, reject) => {
+      this.http.patch('http://localhost:5221/api/cars', payload).subscribe({
+        next: () => {
+          console.log(`Car status updated successfully`);
+          resolve(); // Resolve on success
+        },
+        error: (error) => {
+          console.error('Error updating car status:', error);
+          reject(`Error updating car status for car number: ${request.carNumber || request.carModel}`);
+        },
+      });
+    });
+  }
+
   private createPayload(request: CarRequest): any {
     // Only send carNumber in the payload, carID will be empty
     if (request.carNumber) {
       return { carID: "", statusID: "STATUS002", carNumber: request.carNumber };
+    }
+    return null; // Reject if carNumber is not available
+  }
+
+  private createPayloadAccepted(request: CarRequest): any {
+    // Only send carNumber in the payload, carID will be empty
+    if (request.carNumber) {
+      return { carID: "", statusID: "STATUS003", carNumber: request.carNumber };
     }
     return null; // Reject if carNumber is not available
   }
