@@ -32,6 +32,19 @@
           </div>
         </div>
         
+        <div class="mt-3 text-center">
+          <span class="text-light">Or</span>
+        </div>
+        
+        <button type="button" class="w-100 btn btn-lg btn-light mt-3 d-flex align-items-center justify-content-center" [disabled]="checkingCredentials" (click)="onMicrosoftLogin()" >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 23 23" class="me-2">
+            <path fill="#f25022" d="M1 1h10v10H1z"/>
+            <path fill="#00a4ef" d="M1 12h10v10H1z"/>
+            <path fill="#7fba00" d="M12 1h10v10H12z"/>
+            <path fill="#ffb900" d="M12 12h10v10H12z"/>
+          </svg>
+          <span class="ml-2">Sign in with Microsoft</span>
+        </button>
       </form>
     </div>
     

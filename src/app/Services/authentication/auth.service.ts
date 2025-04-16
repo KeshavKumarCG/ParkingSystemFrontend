@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { environment } from '../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}Auth/login`;;
+  private apiUrl = `${environment.apiUrl}Auth/login`;
+  private microsoftApiUrl = `${environment.apiUrl}Auth/microsoft-login`;  
 
   login(credentials: { emailOrPhone: string; password: string }): Observable<any> {
     return from(
@@ -17,6 +18,23 @@ export class AuthService {
         },
         body: JSON.stringify(credentials),
       }).then(response => response.json())
+    );
+  }
+
+  loginWithMicrosoft(): Observable<any> {
+    // Using the same fetch pattern as your regular login
+    return from(
+      fetch(this.microsoftApiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Microsoft login failed');
+        }
+        return response.json();
+      })
     );
   }
 
@@ -58,4 +76,3 @@ export class AuthService {
     return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
   }
 }
-
